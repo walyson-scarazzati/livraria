@@ -2,26 +2,26 @@ import { Component, OnInit , Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {Livraria } from '../livraria';
+import {Livro } from '../livro';
 import {LivroService} from '../livro.service';
 
 @Component({
-  selector: 'app-edit-livraria',
-  templateUrl: './edit-livraria.component.html',
-  styleUrls: ['./edit-livraria.component.css']
+  selector: 'app-edit-livro',
+  templateUrl: './edit-livro.component.html',
+  styleUrls: ['./edit-livro.component.css']
 })
-export class EditLivrariaComponent implements OnInit {
+export class EditLivroComponent implements OnInit {
 
-  livraria: Livraria;
+  livro: Livro;
   editForm: FormGroup;
   submitted = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private apiService: LivroService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private livroService: LivroService) { }
 
   ngOnInit() {
-    let livrariaId = window.localStorage.getItem('editLivrariaId');
-    if (!livrariaId) {
+    let livroId = window.localStorage.getItem('editLivroId');
+    if (!livroId) {
       alert('Invalid action.');
-      this.router.navigate(['list-livraria']);
+      this.router.navigate(['list-livro']);
       return;
     }
     this.editForm = this.formBuilder.group({
@@ -32,7 +32,7 @@ export class EditLivrariaComponent implements OnInit {
       dataPublicacao: ['', Validators.required],
       imagemCapa: ['', Validators.required]
     });
-    this.apiService.getLivroById(+livrariaId)
+    this.livroService.getLivroById(+livroId)
       .subscribe( data => {
         this.editForm.setValue(data.result);
       });
@@ -40,13 +40,13 @@ export class EditLivrariaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.apiService.atualizar(this.editForm.value)
+    this.livroService.atualizar(this.editForm.value)
       .pipe(first())
       .subscribe(
         data => {
           if (data.status === 200) {
             alert('User updated successfully.');
-            this.router.navigate(['list-livraria']);
+            this.router.navigate(['list-livro']);
           } else {
             alert(data.message);
           }

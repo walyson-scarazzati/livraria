@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Livraria} from './livraria';
+import {Livro} from './livro';
 import {Observable} from 'rxjs/index';
 import {ApiResponse} from '../model/api.response';
 
@@ -21,13 +21,13 @@ export class LivroService {
     return this.http.get<ApiResponse>(this.baseUrl + id);
   }
 
-  salvar(livraria: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl + 'salvar'}`, livraria);
+  salvar(livro: Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl + 'salvar'}`, livro);
   }
 
 
 
-  atualizar(livro: Livraria): Observable<ApiResponse> {
+  atualizar(livro: Livro): Observable<ApiResponse> {
     return this.http.put<ApiResponse>(this.baseUrl + livro.isbn, livro);
   }
 

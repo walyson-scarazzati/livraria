@@ -1,24 +1,23 @@
-import { LivrariaService } from '../livraria.service';
-import {Livraria} from '../livraria';
+import {Livro} from '../livro';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {LivroService} from '../livro.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-livraria',
-  templateUrl: './add-livraria.component.html',
-  styleUrls: ['./add-livraria.component.css']
+  selector: 'app-add-livro',
+  templateUrl: './add-livro.component.html',
+  styleUrls: ['./add-livro.component.css']
 })
-export class AddLivrariaComponent implements OnInit {
+export class AddLivroComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder,private livrariaService: LivroService,
+  constructor(private formBuilder: FormBuilder,private livroService: LivroService,
     private router: Router) { }
 
 
  // addForm: FormGroup;
 
-  livraria: Livraria = new Livraria();
+  livro: Livro = new Livro();
   submitted = false;
 
   ngOnInit() {
@@ -33,18 +32,18 @@ export class AddLivrariaComponent implements OnInit {
 
   }
 
-  newLivraria(): void {
+  newLivro(): void {
     this.submitted = false;
-    this.livraria = new Livraria();
+    this.livro = new Livro();
   }
 
       //this.livrariaService.salvar(this.addForm.value)
 
     save() {
 
-   this.livrariaService.salvar(this.livraria)
+   this.livroService.salvar(this.livro)
      .subscribe(data => console.log(data), error => console.log(error));
- this.livraria = new Livraria();
+ this.livro = new Livro();
   this.gotoList();
  }
 
@@ -68,7 +67,7 @@ export class AddLivrariaComponent implements OnInit {
   }
 
   gotoList() {
-    this.router.navigate(['list-livraria']);
+    this.router.navigate(['list-livro']);
   }
 
 }

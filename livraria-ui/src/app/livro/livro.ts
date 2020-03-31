@@ -1,4 +1,4 @@
-export class Livraria {
+export class Livro {
   isbn: number;
   titulo: string;
   autor: string;

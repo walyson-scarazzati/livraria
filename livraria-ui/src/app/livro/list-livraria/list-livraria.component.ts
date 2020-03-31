@@ -1,6 +1,6 @@
 import { Component, OnInit , Inject} from '@angular/core';
 import {Router} from '@angular/router';
-import {Livraria} from '../livraria';
+import {Livro} from '../livro';
 import {LivroService} from '../livro.service';
 import { Observable } from 'rxjs';
 
@@ -8,15 +8,15 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'app-list-livraria',
-  templateUrl: './list-livraria.component.html',
-  styleUrls: ['./list-livraria.component.css']
+  selector: 'app-list-livro',
+  templateUrl: './list-livro.component.html',
+  styleUrls: ['./list-livro.component.css']
 })
-export class ListLivrariaComponent implements OnInit {
+export class ListLivroComponent implements OnInit {
 
-  livros: Observable<Livraria[]>;
+  livros: Observable<Livro[]>;
 
-  constructor(private livrariaService: LivroService,
+  constructor(private livroService: LivroService,
     private router: Router) {}
 
   ngOnInit() {
@@ -24,12 +24,12 @@ export class ListLivrariaComponent implements OnInit {
   }
 
   reloadData() {
-    this.livros = this.livrariaService.listar();
+    this.livros = this.livroService.listar();
     console.log(this.livros);
   }
 
   deleteLivro(id: number) {
-    this.livrariaService.remover(id)
+    this.livroService.remover(id)
       .subscribe(
         data => {
           console.log(data);
@@ -47,6 +47,6 @@ export class ListLivrariaComponent implements OnInit {
   }
 
   addLivro(): void {
-    this.router.navigate(['add-livraria']);
+    this.router.navigate(['add-livro']);
   }
 }

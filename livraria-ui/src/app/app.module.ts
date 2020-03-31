@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ListLivrariaComponent } from './livraria/list-livraria/list-livraria.component';
-import { AddLivrariaComponent } from './livraria/add-livraria/add-livraria.component';
-import { EditLivrariaComponent } from './livraria/edit-livraria/edit-livraria.component';
+import { ListLivroComponent } from './livro/list-livro/list-livro.component';
+import { AddLivroComponent } from './livro/add-livro/add-livro.component';
+import { EditLivroComponent } from './livro/edit-livro/edit-livro.component';
 import {UploadFileComponent} from './components/upload-file/upload-file/upload-file.component';
 import {DatePickerComponent} from './components/date-picker/date-picker/date-picker.component';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
@@ -20,9 +20,9 @@ import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.componen
 @NgModule({
   declarations: [
     AppComponent,
-    ListLivrariaComponent,
-    AddLivrariaComponent,
-    EditLivrariaComponent,
+    ListLivroComponent,
+    AddLivroComponent,
+    EditLivroComponent,
     UploadFileComponent,
     DatePickerComponent,
     UsuarioComponent,
