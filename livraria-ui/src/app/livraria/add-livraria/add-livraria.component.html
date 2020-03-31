@@ -1,0 +1,41 @@
+<h3>Livro</h3>
+<div [hidden]="submitted" style="width: 400px;">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="titulo">Título:</label>
+            <input type="text" class="form-control" id="titulo" required="true" [(ngModel)]="livraria.titulo" name="titulo">
+        </div>
+
+        <div class="form-group">
+            <label for="autor">Autor</label>
+            <input type="text" class="form-control" id="autor" required [(ngModel)]="livraria.autor" name="autor">
+        </div>
+
+        <div class="form-group">
+            <label for="preco">Preço</label>
+            <input type="text" class="form-control" id="preco" required [(ngModel)]="livraria.preco" name="preco">
+        </div>
+
+        <div class="form-group">
+            <label for="dataPublicacao">Data da Publicação:</label>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Escolher a data da publicação" id="dataPublicacao" name="dataPublicacao" [(ngModel)]="livraria.dataPublicacao" readonly (click)="picker.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+        <div class="form-group">
+            <label for="imagemCapa">Imagem da Capa:</label>
+            <input type="text" class="form-control" id="imagemCapa" name="imagemCapa" required [(ngModel)]="livraria.imagemCapa">
+        </div>
+
+        <button type="submit" class="btn btn-success">Salvar</button>
+    </form>
+</div>
+
+<div [hidden]="!submitted">
+    <h4>You submitted successfully!</h4>
+    <!-- <button class="btn btn-success" (click)="newEmployee()">Add</button> -->
+</div>
+_________

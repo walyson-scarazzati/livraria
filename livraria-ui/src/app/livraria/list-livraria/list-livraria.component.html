@@ -1,0 +1,38 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2>Livro</h2>
+    </div>
+    <button class="btn btn-success" (click)="addLivro()" style="margin: 10px;">Adicionar</button>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Isbn</th>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                    <th>Preço</th>
+                    <th>Data da Publicação</th>
+                    <th>Imagem da Capa</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let livro of livros | async">
+                    <td class="hidden">{{livro.isbn}}</td>
+                    <td>{{livro.titulo}}</td>
+                    <td>{{livro.autor}}</td>
+                    <td>{{livro.preco}}</td>
+                    <td>{{livro.dataPublicacao.toString() | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{livro.imagemCapa}}</td>
+                    <td><button class="btn btn-success" (click)="editLivro(livro.isbn)">Editar</button>
+                        <button class="btn btn-info" (click)="detailsLivro(livro.isbn)" style="margin-left: 20px;">Visualizar</button>
+                        <button class="btn btn-danger" (click)="deleteLivro(livro.isbn)" style="margin-left: 10px">Deletar</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tr class="grid" *ngIf="(livros | async)?.length === 0">
+                <td colspan="7">Dados não encontrados</td>
+            </tr>
+        </table>
+    </div>
+</div>

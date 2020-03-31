@@ -1,0 +1,9 @@
+.livraria-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.grid {
+    background: #dee2e6;
+}

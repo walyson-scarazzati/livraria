@@ -1,0 +1,32 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2>Usuário</h2>
+    </div>
+    <button class="btn btn-success" (click)="addUsuario()" style="margin: 10px;">Adicionar</button>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Senha</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usuario of usuarios | async">
+                    <td>{{usuario.nome}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.senha}}</td>
+                    <td><button class="btn btn-success" (click)="editUsuario(usuario.id)">Editar</button>
+                        <button class="btn btn-info" (click)="detailsUsuario(usuario.id)" style="margin-left: 20px;">Visualizar</button>
+                        <button class="btn btn-danger" (click)="deleteUsuario(usuario.id)" style="margin-left: 10px">Deletar</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tr class="grid" *ngIf="(usuarios | async)?.length === 0">
+                <td colspan="5">Dados não encontrados</td>
+            </tr>
+        </table>
+    </div>
+</div>
