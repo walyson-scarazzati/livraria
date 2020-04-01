@@ -13,16 +13,20 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString @EqualsAndHashCode
+@AllArgsConstructor
+@ToString 
+@EqualsAndHashCode
 @Entity
 @Table(name = "livros")
 public class Livro implements Serializable {
@@ -34,18 +38,33 @@ public class Livro implements Serializable {
 	private Long Isbn;
     
     @NotNull
+    
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
 	private String autor;
     
     @NotNull
+    
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
 	private String titulo; 
 	
     @NotNull
+    
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
 	private Double preco; 
 	
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd", shape = Shape.STRING)
+    
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
     private Date dataPublicacao; 
 	
     @NotNull
+    
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
 	private String imagemCapa;
 }

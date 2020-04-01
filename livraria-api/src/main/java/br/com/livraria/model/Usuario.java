@@ -17,15 +17,19 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -37,14 +41,23 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	 @NotNull
+	@NotNull
+	
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
 	private String nome;
 	@Email(message = "Invalid Email")
 	@Size(max = 254, message = "It is too big")
 	@Column(unique = true)
 	@NotNull(message = "Please, set here the user email")
+	
+    //para colocar esse field como obrigatório no lombok
+    @NonNull
 	private String email;
 	 @NotNull
+	 
+	  //para colocar esse field como obrigatório no lombok
+	 @NonNull
 	private String senha;
 
 	@OneToMany(fetch = FetchType.EAGER)
