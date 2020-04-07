@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {Usuario} from './usuario';
 import {Observable} from 'rxjs/index';
 import {ApiResponse} from '../model/api.response';
+import {environment} from '../../environments/environment';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import {ApiResponse} from '../model/api.response';
 export class UsuarioService {
 
   constructor(private http: HttpClient) { }
-  baseUrl: string = 'http://localhost:9191/springboot-crud-rest/usuarios/';
+  baseUrl: string = environment.BASE_URL + '/usuarios/';
 
   listar(): Observable<any> {
     return this.http.get(`${this.baseUrl + 'listar'}`);
