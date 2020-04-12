@@ -17,7 +17,9 @@ export class ListLivroComponent implements OnInit {
   livros: Observable<Livro[]>;
 
   constructor(private livroService: LivroService,
-    private router: Router) {}
+    private router: Router) {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
   ngOnInit() {
     this.reloadData();

@@ -3,7 +3,7 @@ import { UploadFileService } from '../upload-file.service';
 import { take } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
-import { filterResponse, uploadProgress } from '../../../shared/rxjs-operators';
+import { filterResponse, uploadProgress } from '../../../components/rxjs-operators';
 
 @Component({
   selector: 'app-upload-file',

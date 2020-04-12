@@ -1,8 +1,10 @@
+
 import {Usuario} from './usuario';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input, HostListener, Output } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import {UsuarioService} from './usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {ListUsuarioComponent} from './list-usuario/list-usuario.component';
 
 @Component({
   selector: 'app-add-usuario',
@@ -11,17 +13,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UsuarioComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder,private usuarioService: UsuarioService,
-    private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private usuarioService: UsuarioService,
+    private router: Router, private route: ActivatedRoute) { }
 
 
-  addForm: FormGroup;
+  form: FormGroup;
 
   usuario: Usuario = new Usuario();
   submitted = false;
+  isSalvarOuEditar: any;
+  isDetalhe: any;
 
   ngOnInit() {
-    this.addForm = this.formBuilder.group({
+    this.isSalvarOuEditar =  this.usuarioService.getSalvarOuEditar();
+    this.isDetalhe = this.usuarioService.getDetalhe();
+    console.log(this.isSalvarOuEditar);
+    this.form = this.formBuilder.group({
       id: [],
       nome: ['', Validators.required],
       email: ['', Validators.required],
@@ -30,37 +37,40 @@ export class UsuarioComponent implements OnInit {
 
   }
 
-  newLivraria(): void {
-    this.submitted = false;
-    this.usuario = new Usuario();
+  verificaValidTouched(campo) {
+    return !campo.valid && this.submitted;
   }
 
-    save() {
-   this.usuarioService.salvar(this.addForm.value)
-     .subscribe(data => console.log(data), error => console.log(error));
- this.usuario = new Usuario();
-  this.gotoList();
- }
+  aplicaCssErro(campo) {
+    return {
+      'has-error': this.verificaValidTouched(campo),
+      'has-feedback': this.verificaValidTouched(campo)
+    };
+  }
 
+  saveOrUpdate(formulario) {
+    if (formulario.id === undefined) {
+      this.usuarioService.salvar(formulario.value)
+      .subscribe(data => console.log(data), error => console.log(error));
+      this.usuario = new Usuario();
+      this.gotoList();
+      } else {
+        this.usuarioService.atualizar(formulario.value)
+        .subscribe(data => console.log(data), error => console.log(error));
+        this.usuario = new Usuario();
+        this.gotoList();
+    }
 
+   }
 
- // save() {
- //   this.livrariaService.salvar(this.addForm.value)
- //     .subscribe( data => {
- //       this.router.navigate(['list-livraria']);
- //     });
- // }
-
- // save() {
- //   this.livrariaService.salvar(this.livraria)
- //     .subscribe(data => console.log(data), error => console.log(error));
-  //  this.livraria = new Livraria();
- //   this.gotoList();
- // }
-
-  onSubmit() {
+  onSubmit(formulario) {
     this.submitted = true;
-    this.save();
+    if (formulario.invalid) {
+      return;
+  } else {
+    this.saveOrUpdate(formulario);
+  }
+
   }
 
   gotoList() {

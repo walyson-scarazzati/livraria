@@ -33,4 +33,32 @@ export class UsuarioService {
   remover(id: number): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(this.baseUrl + id);
   }
+
+  private salvarOuEditar;
+  private detalhe;
+
+  setSalvarOuEditar(salvarOuEditar){
+    this.salvarOuEditar = salvarOuEditar;
+  }
+
+  getSalvarOuEditar(){
+    let temp = this.salvarOuEditar;
+    this.clearData();
+    return temp;
+  }
+
+  setDetalhe(detalhe){
+    this.detalhe = detalhe;
+  }
+
+  getDetalhe(){
+    let temp = this.detalhe;
+    this.clearData();
+    return temp;
+  }
+
+  clearData(){
+    this.salvarOuEditar = undefined;
+  }
+
 }

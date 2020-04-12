@@ -15,6 +15,7 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.component';
+import {SharedModule} from './components/shared.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.componen
     BrowserAnimationsModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ],
   exports: [
     MaterialModule

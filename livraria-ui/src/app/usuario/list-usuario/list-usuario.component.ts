@@ -15,9 +15,13 @@ import { Observable } from 'rxjs';
 export class ListUsuarioComponent implements OnInit {
 
   usuarios: Observable<Usuario[]>;
+  isSalvarOuEditar = false;
+  isDetalhe = true;
 
   constructor(private usuarioService: UsuarioService,
-    private router: Router) {}
+    private router: Router) {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
   ngOnInit() {
     this.reloadData();
@@ -39,14 +43,19 @@ export class ListUsuarioComponent implements OnInit {
   }
 
   detailsUsuario(id: number){
-    this.router.navigate(['usuario', id]);
+    this.usuarioService.setDetalhe(!this.isDetalhe);
+    this.router.navigate(['usuario']);
   }
 
   editUsuario(id: number){
-    this.router.navigate(['usuario', id]);
+    this.usuarioService.setSalvarOuEditar(this.isSalvarOuEditar);
+    this.usuarioService.setDetalhe(this.isDetalhe);
+    this.router.navigate(['usuario']);
   }
 
   addUsuario(): void {
+    this.usuarioService.setSalvarOuEditar(!this.isSalvarOuEditar);
+    this.usuarioService.setDetalhe(this.isDetalhe);
     this.router.navigate(['usuario']);
   }
 }
