@@ -16,7 +16,7 @@ export class ListUsuarioComponent implements OnInit {
 
   usuarios: Observable<Usuario[]>;
   isSalvarOuEditar = false;
-  isDetalhe = true;
+  isDetalhe = false;
 
   constructor(private usuarioService: UsuarioService,
     private router: Router) {
@@ -43,19 +43,19 @@ export class ListUsuarioComponent implements OnInit {
   }
 
   detailsUsuario(id: number){
-    this.usuarioService.setDetalhe(!this.isDetalhe);
+    this.usuarioService.setDetalhe(this.isDetalhe);
     this.router.navigate(['usuario']);
   }
 
   editUsuario(id: number){
     this.usuarioService.setSalvarOuEditar(this.isSalvarOuEditar);
-    this.usuarioService.setDetalhe(this.isDetalhe);
+    this.usuarioService.setDetalhe(!this.isDetalhe);
     this.router.navigate(['usuario']);
   }
 
   addUsuario(): void {
     this.usuarioService.setSalvarOuEditar(!this.isSalvarOuEditar);
-    this.usuarioService.setDetalhe(this.isDetalhe);
+    this.usuarioService.setDetalhe(!this.isDetalhe);
     this.router.navigate(['usuario']);
   }
 }

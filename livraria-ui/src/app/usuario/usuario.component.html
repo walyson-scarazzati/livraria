@@ -6,7 +6,7 @@
         </div>
 
         <div class="col-sm-12">
-            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" [ngModel]="usuario.nome" required #nome="ngModel">
+            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" [ngModel]="usuario.nome" [readonly]="!isDetalhe" required #nome="ngModel">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(nome)" msgErro="Nome é obrigatório.">
             </app-campo-control-erro>
@@ -18,7 +18,7 @@
             <label for="email" class="control-label">Email</label>
         </div>
         <div class="col-sm-12">
-            <input type="email" class="form-control" name="email" id="email" placeholder="nome@email.com" [ngModel]="usuario.email" required #email="ngModel">
+            <input type="email" class="form-control" name="email" id="email" placeholder="nome@email.com" [ngModel]="usuario.email" [readonly]="!isDetalhe" required #email="ngModel">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(email)" msgErro="Email inválido">
             </app-campo-control-erro>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-sm-12">
-            <input type="text" class="form-control" name="senha" id="senha" placeholder="Nome" [ngModel]="usuario.senha" required #senha="ngModel">
+            <input type="text" class="form-control" name="senha" id="senha" placeholder="senha" [ngModel]="usuario.senha" [readonly]="!isDetalhe" required #senha="ngModel">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(senha)" msgErro="Senha é obrigatório.">
             </app-campo-control-erro>
