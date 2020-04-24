@@ -1,6 +1,7 @@
 package br.com.livraria.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import br.com.livraria.model.Usuario;
 
@@ -13,6 +14,7 @@ public interface UsuarioService {
 	void excluir(Long id);
 	
 	Usuario findById(Long id);
-
-	List<Usuario> findAll();
+	
+    Page<Usuario> findAllUsuarios(Pageable pageable);
 }
+

@@ -1,8 +1,8 @@
 package br.com.livraria.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.livraria.model.Usuario;
@@ -35,8 +35,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> findAll() {
-		return usuarioDao.findAll();
+	public Page<Usuario> findAllUsuarios(Pageable pageable) {
+		return usuarioDao.findAllUsuariosWithPagination(pageable);
 	}
 
 }

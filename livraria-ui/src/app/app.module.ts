@@ -16,6 +16,7 @@ import { MaterialModule } from './material.module';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.component';
 import {SharedModule} from './components/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -39,10 +40,12 @@ import {SharedModule} from './components/shared.module';
     NoopAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    NgxPaginationModule
   ],
   exports: [
-    MaterialModule
+    MaterialModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,14 +1,16 @@
 package br.com.livraria.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +31,14 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
-
+	
 	@GetMapping("/listar")
-	public List<Usuario> listar() {
-		return usuarioService.findAll();
-	}
+    public ResponseEntity<Page<Usuario>> findAllUsuario(Pageable pageable, HttpServletRequest req) {
+        Page<Usuario> page = usuarioService.findAllUsuarios(pageable);
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
 
-	@PostMapping(value = "/salvar", 
-			produces = {MimeTypeUtils.APPLICATION_JSON_VALUE},
-			consumes = {MimeTypeUtils.APPLICATION_JSON_VALUE})
+	@PostMapping(value = "/salvar")
 	public Usuario salvar(@Valid @RequestBody Usuario usuario) {
 		return usuarioService.salvar(usuario);
 	}
