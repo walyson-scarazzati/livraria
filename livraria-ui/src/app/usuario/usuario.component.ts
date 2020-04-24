@@ -4,7 +4,6 @@ import { Component, OnInit, Input, HostListener, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {UsuarioService} from './usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {ListUsuarioComponent} from './list-usuario/list-usuario.component';
 
 @Component({
   selector: 'app-add-usuario',
