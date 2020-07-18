@@ -14,6 +14,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+@Data
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -35,7 +39,10 @@ public class Livro implements Serializable {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-	private Long Isbn;
+    private Long id;
+    
+    @NotNull
+	private String isbn;
     
     @NotNull
     

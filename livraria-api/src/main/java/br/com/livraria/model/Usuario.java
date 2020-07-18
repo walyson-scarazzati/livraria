@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +14,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import javax.persistence.*;
+import java.util.Collection;
+
 import org.hibernate.validator.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +31,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
-
+@Data
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -42,25 +49,28 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	
-    //para colocar esse field como obrigatório no lombok
-    @NonNull
+
+	// para colocar esse field como obrigatório no lombok
+	@NonNull
 	private String nome;
-	@Email(message = "Invalid Email")
-	@Size(max = 254, message = "It is too big")
+	@Email(message = "Email invalido")
+	@Size(max = 254, message = "Muito grande")
 	@Column(unique = true)
-	@NotNull(message = "Please, set here the user email")
-	
-    //para colocar esse field como obrigatório no lombok
-    @NonNull
+	@NotNull(message = "Por favor coloque um email")
+
+	// para colocar esse field como obrigatório no lombok
+	@NonNull
 	private String email;
-	 @NotNull
-	 
-	  //para colocar esse field como obrigatório no lombok
-	 @NonNull
+
+	@NotNull
+
+	// para colocar esse field como obrigatório no lombok
+	@NonNull
+	@JsonIgnore
 	private String senha;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Role> roles = new ArrayList<Role>();
-	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuarios_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private Collection<Role> roles;
+
 }

@@ -1,5 +1,8 @@
 package br.com.livraria.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,12 +12,21 @@ public interface UsuarioService {
 	
 	Usuario salvar(Usuario usuario);
 
-	void editar(Usuario usuario);
+	Usuario editar(Usuario usuario);
 
-	void excluir(Long id);
+	void excluir(Usuario usuario);
 	
-	Usuario findById(Long id);
+	Optional<Usuario> findById(Long id);
 	
-    Page<Usuario> findAllUsuarios(Pageable pageable);
+    Page<Usuario> findAllUsuarios(Usuario usuario, Pageable pageable);
+	
+    Page<Usuario> findByNome(String nome, Pageable pageable);
+	
+    Page<Usuario> findByEmail(String email, Pageable pageable);
+	
+	List<Usuario> findAllRoles();
+	
+	Page<Usuario> findByRoles(Long id, Pageable pageable);
+
 }
 

@@ -1,19 +1,27 @@
 package br.com.livraria.service;
 
-import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import br.com.livraria.model.Livro;
 
 public interface LivroService {
-	Livro salvar(Livro livraria);
+	Livro salvar(Livro livro);
 
-	void editar(Livro livraria);
+	Livro editar(Livro livro);
 
-	void excluir(Long id);
+	void excluir(Livro livro);
 
-	List<Livro> findAll();
+	Page<Livro> findAll(Livro filter, Pageable pageRequest);
 
-	Livro findById(Long id);
+	Optional<Livro> findById(Long id);
 
-	List<Livro> findByTitulo(String nome);
+	Page<Livro> findByTitulo(String titulo, Pageable pageRequest);
+	
+	Page<Livro> findByAutor(String autor, Pageable pageRequest);
+	
+	Optional<Livro> findByIsbn(String isbn);
+	
 }
