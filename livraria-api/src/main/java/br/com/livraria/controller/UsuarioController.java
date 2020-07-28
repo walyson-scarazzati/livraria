@@ -1,17 +1,19 @@
 package br.com.livraria.controller;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.livraria.config.Translator;
+import br.com.livraria.dto.RoleDTO;
 import br.com.livraria.dto.UsuarioDTO;
+import br.com.livraria.model.Role;
 import br.com.livraria.model.Usuario;
 import br.com.livraria.service.UsuarioServiceImpl;
 import io.swagger.annotations.Api;
@@ -50,15 +54,12 @@ public class UsuarioController {
 
 	@GetMapping("/listar")
 	@ApiOperation("Procurar usuários")
-	 public Page<UsuarioDTO> find(UsuarioDTO dto, Pageable pageRequest) {
+	public Page<UsuarioDTO> find(UsuarioDTO dto, Pageable pageRequest) {
 		Usuario filter = modelMapper.map(dto, Usuario.class);
-        Page<Usuario> result = usuarioService.findAllUsuarios(filter, pageRequest);
-        List<UsuarioDTO> list = result.getContent()
-                .stream()
-                .map(entity -> modelMapper.map(entity, UsuarioDTO.class))
-                .collect(Collectors.toList());
-
-        return new PageImpl<UsuarioDTO>(list, pageRequest, result.getTotalElements());
+		Page<Usuario> result = usuarioService.findAllUsuarios(filter, pageRequest);
+		List<UsuarioDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, UsuarioDTO.class))
+				.collect(Collectors.toList());
+		return new PageImpl<UsuarioDTO>(list, pageRequest, result.getTotalElements());
 	}
 
 	@PostMapping(value = "/salvar")
@@ -89,21 +90,19 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation("Excluir um usuário por id")
 	public void excluir(@PathVariable(value = "id") Long id) {
-		 log.info("Excluir um usuário por id: {}", id);
+		log.info("Excluir um usuário por id: {}", id);
 		Usuario usuario = usuarioService.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		usuarioService.excluir(usuario);
 	}
-	
+
 	@GetMapping("{id}")
-    @ApiOperation("Obter detalhes de um usuário pelo id")
-    public UsuarioDTO get(@PathVariable Long id) {
-        log.info("Obter detalhes de um usuário pelo id: {}", id);
-        return usuarioService
-                .findById(id)
-                .map(usuario -> modelMapper.map(usuario, UsuarioDTO.class) )
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
+	@ApiOperation("Obter detalhes de um usuário pelo id")
+	public UsuarioDTO get(@PathVariable Long id) {
+		log.info("Obter detalhes de um usuário pelo id: {}", id);
+		return usuarioService.findById(id).map(usuario -> modelMapper.map(usuario, UsuarioDTO.class))
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+	}
 
 	@GetMapping("/nome/{nome}")
 	public Page<UsuarioDTO> findByNome(@PathVariable(value = "nome") String nome, Pageable pageable) {
@@ -125,22 +124,14 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/roles")
-	public ResponseEntity<List<Usuario>> findAllPerfis() {
-		List<Usuario> perfis = usuarioService.findAllRoles();
-		return new ResponseEntity<>(perfis, HttpStatus.OK);
+	public List<RoleDTO> roles() {
+		List<Role> result = usuarioService.findAllRoles();
+		return result.stream().map(entity -> modelMapper.map(entity, RoleDTO.class)).collect(Collectors.toList());
 	}
 
-	@GetMapping("/roles/{id}")
-	public Page<UsuarioDTO> findByRoles(@PathVariable(value = "id") Long id, Pageable pageable) {
-		Page<Usuario> result = usuarioService.findByRoles(id, pageable);
-		List<UsuarioDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, UsuarioDTO.class))
-				.collect(Collectors.toList());
-
-		return new PageImpl<UsuarioDTO>(list, pageable, result.getTotalElements());
+	@GetMapping("/traducao")
+	public String getMessage(@RequestParam("msg") String msg) {
+		return Translator.toLocale(msg);
 	}
 
-	@GetMapping("/traducao") 
-	public String getMessage(@RequestParam("msg") String msg) { 
-		return Translator.toLocale(msg); }
-	
 }

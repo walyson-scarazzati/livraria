@@ -15,19 +15,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UsuarioDTO {
+public class RoleDTO {
 	
 	private Long id;
 	
-	@NotEmpty(message = "{usuario.nome.empty}")
-	private String nome;
-	
-	@NotEmpty(message = "{usuario.email.empty}")
-	private String email;
-	
-	@NotEmpty(message = "{usuario.senha.empty}")
-	private String senha;
-	
-	private RoleDTO roles;
+	@NotEmpty(message = "{role.descricao.empty}")
+	private String descricao;
 
 }

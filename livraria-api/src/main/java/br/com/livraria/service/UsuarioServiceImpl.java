@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.livraria.model.Role;
 import br.com.livraria.model.Usuario;
+import br.com.livraria.repository.RoleRepository;
 import br.com.livraria.repository.UsuarioRepository;
 
 @Service
@@ -16,11 +18,14 @@ import br.com.livraria.repository.UsuarioRepository;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	private UsuarioRepository usuarioRepository;
+	
+	private RoleRepository roleRepository;
 
-	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, RoleRepository roleRepository) {
 		this.usuarioRepository = usuarioRepository;
+		this.roleRepository = roleRepository;
 	}
-
+	
 	@Override
 	public Usuario salvar(Usuario usuario) {
 		return usuarioRepository.save(usuario);
@@ -55,14 +60,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Page<Usuario> findByEmail(String email, Pageable pageable) {
 		return usuarioRepository.findByEmailContainingIgnoreCase(email, pageable);
 	}
-
+	
 	@Override
-	public List<Usuario> findAllRoles() {
-		return usuarioRepository.findAllRoles();
-	}
-
-	@Override
-	public Page<Usuario> findByRoles(Long id, Pageable pageable) {
-		return usuarioRepository.findByRoles(id, pageable);
+	public List<Role> findAllRoles() {
+		return roleRepository.findAll();
 	}
 }

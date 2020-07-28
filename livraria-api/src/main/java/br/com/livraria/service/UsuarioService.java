@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import br.com.livraria.model.Role;
 import br.com.livraria.model.Usuario;
 
 public interface UsuarioService {
@@ -23,10 +24,8 @@ public interface UsuarioService {
     Page<Usuario> findByNome(String nome, Pageable pageable);
 	
     Page<Usuario> findByEmail(String email, Pageable pageable);
-	
-	List<Usuario> findAllRoles();
-	
-	Page<Usuario> findByRoles(Long id, Pageable pageable);
+    
+    List<Role> findAllRoles();
 
 }
 
