@@ -47,31 +47,31 @@ public class Livro implements Serializable {
     @NotNull
     
     //para colocar esse field como obrigatório no lombok
-    @NonNull
+    //@NonNull
 	private String autor;
     
     @NotNull
     
     //para colocar esse field como obrigatório no lombok
-    @NonNull
+   // @NonNull
 	private String titulo; 
 	
     @NotNull
     
     //para colocar esse field como obrigatório no lombok
-    @NonNull
+   // @NonNull
 	private Double preco; 
 	
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd", shape = Shape.STRING)
     
     //para colocar esse field como obrigatório no lombok
-    @NonNull
+   // @NonNull
     private Date dataPublicacao; 
 	
     @NotNull
     
     //para colocar esse field como obrigatório no lombok
-    @NonNull
+   // @NonNull
 	private String imagemCapa;
 }

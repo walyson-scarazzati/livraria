@@ -5,23 +5,27 @@ import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class UsuarioDTO {
 	
 	private Long id;
 	
-	@NotEmpty
+	@NotEmpty(message = "{usuario.nome.empty}")
 	private String nome;
 	
-	@NotEmpty
+	@NotEmpty(message = "{usuario.email.empty}")
 	private String email;
 	
-	@NotEmpty
+	@NotEmpty(message = "{usuario.senha.empty}")
 	private String senha;
 
 }

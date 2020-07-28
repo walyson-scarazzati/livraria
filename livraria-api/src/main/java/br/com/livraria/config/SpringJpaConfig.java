@@ -1,4 +1,4 @@
-package br.com.livraria;
+package br.com.livraria.config;
 
 import java.util.Properties;
 

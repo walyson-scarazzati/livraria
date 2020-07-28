@@ -46,8 +46,8 @@ public class LivroController {
 
 	@GetMapping("/listar")
 	@ApiOperation("Procurar livros")
-	public Page<LivroDTO> listar(Livro livro, Pageable pageRequest) {
-		Livro filter = modelMapper.map(livro, Livro.class);
+	public Page<LivroDTO> listar(LivroDTO dto, Pageable pageRequest) {
+		Livro filter = modelMapper.map(dto, Livro.class);
 		Page<Livro> result = livrariaService.findAll(filter, pageRequest);
 		List<LivroDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, LivroDTO.class))
 				.collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class LivroController {
 	@PostMapping(value = "/salvar")
 	@ApiOperation("Criar um livro")
 	public LivroDTO salvar(@Valid @RequestBody LivroDTO dto) {
-		log.info("creating a livro for isbn: {}", dto.getIsbn());
+		log.info("Criando um livro por isbn: {}", dto.getIsbn());
 		Livro entity = this.modelMapper.map(dto, Livro.class);
 		entity = livrariaService.salvar(entity);
 		return this.modelMapper.map(entity, LivroDTO.class);
@@ -68,7 +68,7 @@ public class LivroController {
 	@ApiOperation("Atualizar um livro")
 	public LivroDTO editar(@PathVariable(value = "id") Long id, @Valid @RequestBody LivroDTO dto) {
 
-		log.info("updating usuario of id: {}", id);
+		log.info("Atualizar um livro por id: {}", id);
 		return livrariaService.findById(id).map(livro -> {
 			livro.setAutor(dto.getAutor());
 			livro.setTitulo(dto.getTitulo());
@@ -80,10 +80,20 @@ public class LivroController {
 	@DeleteMapping("/{id}")
 	@ApiOperation("Excluir um livro por id")
 	public void excluir(@PathVariable(value = "id") Long id) {
-		log.info("deleting book of id: {}", id);
+		log.info("Excluir um livro por id: {}", id);
 		Livro livro = livrariaService.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		livrariaService.excluir(livro);
 	}
+	
+	@GetMapping("{id}")
+    @ApiOperation("Obter detalhes de um livro pelo id")
+    public LivroDTO get(@PathVariable Long id) {
+        log.info("Obter detalhes de um livro pelo id: {}", id);
+        return livrariaService
+                .findById(id)
+                .map( book -> modelMapper.map(book, LivroDTO.class) )
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
 
 	@GetMapping("/titulo/{titulo}")
 	public Page<LivroDTO> findByTitulo(@RequestParam(value = "titulo") String titulo, Pageable pageable) {

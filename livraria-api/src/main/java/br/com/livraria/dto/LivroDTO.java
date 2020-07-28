@@ -2,7 +2,7 @@ package br.com.livraria.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -10,49 +10,37 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.Setter;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class LivroDTO {
 
 	private Long id;
 
-	@NotNull
+	@NotEmpty(message = "{livro.isbn.empty}")
 	private String isbn;
 
-	@NotNull
-
-	// para colocar esse field como obrigatório no lombok
-	@NonNull
+	@NotEmpty(message = "{livro.autor.empty}")
 	private String autor;
 
-	@NotNull
-
-	// para colocar esse field como obrigatório no lombok
-	@NonNull
+	@NotEmpty(message = "{livro.titulo.empty}")
 	private String titulo;
 
-	@NotNull
-
-	// para colocar esse field como obrigatório no lombok
-	@NonNull
+	@NotEmpty(message = "{livro.preco.empty}")
 	private Double preco;
 
-	@NotNull
+	@NotEmpty(message = "{livro.dataPublicacao.empty}")
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
-
-	// para colocar esse field como obrigatório no lombok
-	@NonNull
 	private Date dataPublicacao;
 
-	@NotNull
-
-	// para colocar esse field como obrigatório no lombok
-	@NonNull
+	@NotEmpty(message = "{livro.imagemCapa.empty}")
 	private String imagemCapa;
 
 }
