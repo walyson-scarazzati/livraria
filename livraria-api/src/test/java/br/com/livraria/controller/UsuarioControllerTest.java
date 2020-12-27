@@ -55,7 +55,7 @@ public class UsuarioControllerTest {
 		Usuario usuario = Usuario.builder().id(id).nome(createNewUsuario().getNome())
 				.email(createNewUsuario().getEmail()).senha(createNewUsuario().getSenha()).build();
 
-		BDDMockito.given(usuarioService.findAllUsuarios(Mockito.any(Usuario.class), Mockito.any(Pageable.class)))
+		BDDMockito.given(usuarioService.listarUsuarios(Mockito.any(Usuario.class), Mockito.any(Pageable.class)))
 				.willReturn(new PageImpl<Usuario>(Arrays.asList(usuario), PageRequest.of(0, 100), 1));
 
 		// execução
@@ -80,7 +80,7 @@ public class UsuarioControllerTest {
 		Usuario usuario = Usuario.builder().id(id).nome(createNewUsuario().getNome())
 				.email(createNewUsuario().getEmail()).senha(createNewUsuario().getSenha()).build();
 
-		BDDMockito.given(usuarioService.findById(id)).willReturn(Optional.of(usuario));
+		BDDMockito.given(usuarioService.buscarPorId(id)).willReturn(Optional.of(usuario));
 
 		// execução ou when
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(USUARIO_API.concat("/" + id))
@@ -125,7 +125,7 @@ public class UsuarioControllerTest {
 		Usuario updatingUsuario = Usuario.builder().id(1l).nome("editar").email("editar@gmail.com").senha("editar")
 				.build();
 
-		BDDMockito.given(usuarioService.findById(id)).willReturn(Optional.of(updatingUsuario));
+		BDDMockito.given(usuarioService.buscarPorId(id)).willReturn(Optional.of(updatingUsuario));
 
 		Usuario updatedUsuario = Usuario.builder().id(id).nome("test").email("test@gmail.com").senha("test").build();
 
@@ -151,7 +151,7 @@ public class UsuarioControllerTest {
 	public void testExcluir() throws Exception {
 
 		// cenário ou given
-		BDDMockito.given(usuarioService.findById(Mockito.anyLong())).willReturn(
+		BDDMockito.given(usuarioService.buscarPorId(Mockito.anyLong())).willReturn(
 				Optional.of(Usuario.builder().id(1l).nome("test").email("test@gmail.com").senha("test").build()));
 
 		// execução ou when
@@ -171,7 +171,7 @@ public class UsuarioControllerTest {
 		Usuario usuario = Usuario.builder().id(1L).nome(createNewUsuario().getNome()).email(email)
 				.senha(createNewUsuario().getSenha()).build();
 
-		BDDMockito.given(usuarioService.findAllUsuarios(Mockito.any(Usuario.class), Mockito.any(Pageable.class)))
+		BDDMockito.given(usuarioService.listarUsuarios(Mockito.any(Usuario.class), Mockito.any(Pageable.class)))
 				.willReturn(new PageImpl<Usuario>(Arrays.asList(usuario), PageRequest.of(0, 100), 1));
 
 		// execução
@@ -197,7 +197,7 @@ public class UsuarioControllerTest {
 		Usuario usuario = Usuario.builder().id(1L).nome(nome).email(createNewUsuario().getEmail())
 				.senha(createNewUsuario().getSenha()).build();
 
-		BDDMockito.given(usuarioService.findAllUsuarios(Mockito.any(Usuario.class), Mockito.any(Pageable.class)))
+		BDDMockito.given(usuarioService.listarUsuarios(Mockito.any(Usuario.class), Mockito.any(Pageable.class)))
 				.willReturn(new PageImpl<Usuario>(Arrays.asList(usuario), PageRequest.of(0, 100), 1));
 
 		// execução

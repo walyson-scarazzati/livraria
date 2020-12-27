@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import br.com.livraria.model.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 	Usuario findByEmail(String email);
 
 	Page<Usuario> findByNomeContainingIgnoreCase(String nome, Pageable pageable);

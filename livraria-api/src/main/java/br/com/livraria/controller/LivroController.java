@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +29,8 @@ import br.com.livraria.model.Livro;
 import br.com.livraria.service.LivroServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("livros")
 @RequiredArgsConstructor
-@Api("Livro API")
+@Api(description = "Endpoint para criar, atualizar, deletar, excluir e buscar os Livros.", tags = {"Livro API"})
 @Slf4j
 public class LivroController {
 
@@ -44,19 +47,25 @@ public class LivroController {
 
 	private final ModelMapper modelMapper;
 
+	@ApiOperation("Listar livros")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Retorna a lista de livro"),
+		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+		    @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+	})
 	@GetMapping("/listar")
-	@ApiOperation("Procurar livros")
-	public Page<LivroDTO> listar(LivroDTO dto, Pageable pageRequest) {
+	public Page<LivroDTO> listarLivros(LivroDTO dto, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
 		Livro filter = modelMapper.map(dto, Livro.class);
-		Page<Livro> result = livrariaService.findAll(filter, pageRequest);
+	    PageRequest pageRequest = PageRequest.of(page, size);
+		Page<Livro> result = livrariaService.listarLivros(filter, pageRequest);
 		List<LivroDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, LivroDTO.class))
 				.collect(Collectors.toList());
 
 		return new PageImpl<LivroDTO>(list, pageRequest, result.getTotalElements());
 	}
 
-	@PostMapping(value = "/salvar")
 	@ApiOperation("Criar um livro")
+	@PostMapping(value = "/salvar")
 	public LivroDTO salvar(@Valid @RequestBody LivroDTO dto) {
 		log.info("Criando um livro por isbn: {}", dto.getIsbn());
 		Livro entity = this.modelMapper.map(dto, Livro.class);
@@ -64,12 +73,12 @@ public class LivroController {
 		return this.modelMapper.map(entity, LivroDTO.class);
 	}
 
-	@PutMapping("/{id}")
 	@ApiOperation("Atualizar um livro")
+	@PutMapping("/{id}")
 	public LivroDTO editar(@PathVariable(value = "id") Long id, @Valid @RequestBody LivroDTO dto) {
 
 		log.info("Atualizar um livro por id: {}", id);
-		return livrariaService.findById(id).map(livro -> {
+		return livrariaService.buscarPorId(id).map(livro -> {
 			livro.setAutor(dto.getAutor());
 			livro.setTitulo(dto.getTitulo());
 			livro = livrariaService.editar(livro);
@@ -77,36 +86,38 @@ public class LivroController {
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	@DeleteMapping("/{id}")
 	@ApiOperation("Excluir um livro por id")
+	@DeleteMapping("/{id}")
 	public void excluir(@PathVariable(value = "id") Long id) {
 		log.info("Excluir um livro por id: {}", id);
-		Livro livro = livrariaService.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		Livro livro = livrariaService.buscarPorId(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		livrariaService.excluir(livro);
 	}
 	
-	@GetMapping("{id}")
     @ApiOperation("Obter detalhes de um livro pelo id")
-    public LivroDTO get(@PathVariable Long id) {
+	@GetMapping("{id}")
+    public LivroDTO buscarPorId(@PathVariable Long id) {
         log.info("Obter detalhes de um livro pelo id: {}", id);
         return livrariaService
-                .findById(id)
+                .buscarPorId(id)
                 .map( book -> modelMapper.map(book, LivroDTO.class) )
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+	@ApiOperation("Buscar usuários por título")
 	@GetMapping("/titulo/{titulo}")
-	public Page<LivroDTO> findByTitulo(@RequestParam(value = "titulo") String titulo, Pageable pageable) {
-		Page<Livro> result = livrariaService.findByTitulo(titulo, pageable);
+	public Page<LivroDTO> buscarPorTitulo(@RequestParam(value = "titulo") String titulo, Pageable pageable) {
+		Page<Livro> result = livrariaService.buscarPorTitulo(titulo, pageable);
 		List<LivroDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, LivroDTO.class))
 				.collect(Collectors.toList());
 
 		return new PageImpl<LivroDTO>(list, pageable, result.getTotalElements());
 	}
 
+	@ApiOperation("Buscar usuários por autor")
 	@GetMapping("/autor/{autor}")
-	public Page<LivroDTO> findByAutor(@RequestParam(value = "autor") String autor, Pageable pageable) {
-		Page<Livro> result = livrariaService.findByAutor(autor, pageable);
+	public Page<LivroDTO> buscarPorAutor(@RequestParam(value = "autor") String autor, Pageable pageable) {
+		Page<Livro> result = livrariaService.buscarPorAutor(autor, pageable);
 		List<LivroDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, LivroDTO.class))
 				.collect(Collectors.toList());
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import {Usuario} from './usuario';
 import {Observable} from 'rxjs/index';
 import {ApiResponse} from '../model/api.response';
 import {environment} from '../../environments/environment';
+
 
 
 @Injectable({
@@ -14,8 +15,15 @@ export class UsuarioService {
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.BASE_URL + '/usuarios/';
 
-  listar(): Observable<any> {
-    return this.http.get(`${this.baseUrl + 'listar'}`);
+  salvarOuEditar;
+  detalhe;
+
+  listar(params): Observable<any> {
+   return this.http.get(this.baseUrl + 'listar', { params });
+  }
+
+  listarRoles(): Observable<any> {
+    return this.http.get(`${this.baseUrl + 'roles'}`);
   }
 
   getLivroById(id: number): Observable<ApiResponse> {
@@ -34,30 +42,35 @@ export class UsuarioService {
     return this.http.delete<ApiResponse>(this.baseUrl + id);
   }
 
-  private salvarOuEditar;
-  private detalhe;
+  findByNome(nome: string): Observable<any> {
+    return this.http.get(this.baseUrl + '/nome/' + nome);
+  }
 
-  setSalvarOuEditar(salvarOuEditar){
+  findByEmail(email: string): Observable<any> {
+    return this.http.get(this.baseUrl + '/email/' + email);
+  }
+
+  setSalvarOuEditar(salvarOuEditar) {
     this.salvarOuEditar = salvarOuEditar;
   }
 
-  getSalvarOuEditar(){
+  getSalvarOuEditar() {
     let temp = this.salvarOuEditar;
     this.clearData();
     return temp;
   }
 
-  setDetalhe(detalhe){
+  setDetalhe(detalhe) {
     this.detalhe = detalhe;
   }
 
-  getDetalhe(){
+  getDetalhe() {
     let temp = this.detalhe;
     this.clearData();
     return temp;
   }
 
-  clearData(){
+  clearData() {
     this.salvarOuEditar = undefined;
   }
 

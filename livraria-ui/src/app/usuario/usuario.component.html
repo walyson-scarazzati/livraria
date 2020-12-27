@@ -40,6 +40,21 @@
     </div>
 
     <div class="form-group">
+
+        <div class="col-sm-4">
+            <label for="perfil" class="control-label">Perfil</label>
+        </div>
+
+        <div class="col-sm-4">
+            <select class="form-control" name="perfil" id="perfil">
+            <option value="">Escolha o perfil</option>
+            <option *ngFor="let role of roles">{{role.descricao}}</option>
+          </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
         <div class="row">
             <div class="col-sm-1" *ngIf="isDetalhe">
                 <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>

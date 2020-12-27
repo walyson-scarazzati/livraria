@@ -26,16 +26,16 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.livraria.exception.BusinessException;
 import br.com.livraria.model.Livro;
-import br.com.livraria.repository.LivroRepository;
+import br.com.livraria.repository.ILivroRepository;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class UsuarioServiceTest {
 
-	LivroService service;
+	ILivroService service;
 
 	@MockBean
-	LivroRepository repository;
+	ILivroRepository repository;
 
 	@BeforeEach
 	public void setUp() {
@@ -94,7 +94,7 @@ public class UsuarioServiceTest {
 		Mockito.when(repository.findById(id)).thenReturn(Optional.of(livro));
 
 		// execução
-		Optional<Livro> foundLivro = service.findById(id);
+		Optional<Livro> foundLivro = service.buscarPorId(id);
 
 		// verificação
 		assertThat(foundLivro.isPresent()).isTrue();
@@ -113,7 +113,7 @@ public class UsuarioServiceTest {
 		Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
 
 		// execução
-		Optional<Livro> livro = service.findById(id);
+		Optional<Livro> livro = service.buscarPorId(id);
 
 		// verificação
 		assertThat(livro.isPresent()).isFalse();
@@ -202,7 +202,7 @@ public class UsuarioServiceTest {
 		Mockito.when(repository.findAll(Mockito.any(Example.class), Mockito.any(PageRequest.class))).thenReturn(page);
 
 		// execução
-		Page<Livro> result = service.findAll(livro, pageRequest);
+		Page<Livro> result = service.listarLivros(livro, pageRequest);
 
 		// verificação
 		assertThat(result.getTotalElements()).isEqualTo(1);
@@ -223,7 +223,7 @@ public class UsuarioServiceTest {
 				.autor("Fulano").preco(2.30).dataPublicacao(date).imagemCapa("1").isbn(isbn).id(1l).build()));
 
 		// execução
-		Optional<Livro> livro = service.findByIsbn(isbn);
+		Optional<Livro> livro = service.buscarPorIsbn(isbn);
 
 		// verificação
 		assertThat(livro.isPresent()).isTrue();

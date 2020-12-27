@@ -6,13 +6,28 @@
     <div class="form-group">
         <div class="col-sm-6">
             <label for="nome">Nome:</label>
-            <input id="nome" name="nome" class="form-control ml-2 mr-2">
+            <input id="nome" #nomeSearchInput name="nome" class="form-control ml-2 mr-2" placeholder="Colocar nome">
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-6">
             <label for="email">Email:</label>
-            <input id="email" name="email" class="form-control ml-2 mr-2">
+            <input id="email" name="email" class="form-control ml-2 mr-2" placeholder="Colocar email">
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-sm-4">
+            <label for="perfil" class="control-label">Perfil</label>
+        </div>
+
+        <div class="col-sm-4">
+            <select class="form-control" name="perfil" id="perfil">
+            <option value="">Escolha o perfil</option>
+            <option *ngFor="let role of roles">{{role.descricao}}</option>
+          </select>
+
         </div>
     </div>
 
@@ -27,18 +42,21 @@
                 <tr>
                     <th>Nome</th>
                     <th>Email</th>
-                    <th>Senha</th>
+                    <th>Perfil</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let usuario of usuarioList | paginate: { id: 'listing_pagination',
-                itemsPerPage: 3,
-                currentPage: page,
-                totalItems: totalRec }">
+                <tr *ngFor="let usuario of usuarioList | paginate : { id: 'listing_pagination',
+                    itemsPerPage: size,
+                    currentPage: page,
+                    totalItems: count
+                  };
+                  let i = index
+                  " [class.active]="i == currentIndex">
                     <td>{{usuario.nome}}</td>
                     <td>{{usuario.email}}</td>
-                    <td>{{usuario.senha}}</td>
+                    <td>{{usuario.role.descricao}}</td>
                     <td>
                         <button class="btn btn-light" (click)="editUsuario(usuario.id)" title="Editar">
                         <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" data-original-title="Editar"></i></a>
@@ -61,7 +79,7 @@
         </table>
 
         <div *ngIf="usuarioList?.length">
-            <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+            <pagination-controls id="listing_pagination" maxSize="3" directionLinks="true" (pageChange)="handlePageChange($event)"></pagination-controls>
         </div>
     </div>
 </div>

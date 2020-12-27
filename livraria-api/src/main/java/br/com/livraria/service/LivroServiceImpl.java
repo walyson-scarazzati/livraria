@@ -11,15 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.livraria.exception.BusinessException;
 import br.com.livraria.model.Livro;
-import br.com.livraria.repository.LivroRepository;
+import br.com.livraria.repository.ILivroRepository;
 
 @Service
 @Transactional
-public class LivroServiceImpl implements LivroService {
+public class LivroServiceImpl implements ILivroService {
 	
-	private LivroRepository livroRepository;
+	private ILivroRepository livroRepository;
 	
-	public LivroServiceImpl(LivroRepository livroRepository) {
+	public LivroServiceImpl(ILivroRepository livroRepository) {
         this.livroRepository = livroRepository;
     }
 	
@@ -45,12 +45,12 @@ public class LivroServiceImpl implements LivroService {
 	}
 
 	@Override
-	public Optional<Livro> findById(Long id) {
+	public Optional<Livro> buscarPorId(Long id) {
 		return livroRepository.findById(id);
 	}
 
 	@Override
-	public Page<Livro> findAll(Livro filter, Pageable pageRequest) {
+	public Page<Livro> listarLivros(Livro filter, Pageable pageRequest) {
 		 Example<Livro> example = Example.of(filter,
 	                ExampleMatcher
 	                        .matching()
@@ -63,17 +63,17 @@ public class LivroServiceImpl implements LivroService {
 	}
 
 	@Override
-	public Page<Livro> findByTitulo(String nome, Pageable pageable) {
+	public Page<Livro> buscarPorTitulo(String nome, Pageable pageable) {
 		return livroRepository.findByTituloContainingIgnoreCase(nome, pageable);
 	}
 
 	@Override
-	public Page<Livro> findByAutor(String autor, Pageable pageable) {
+	public Page<Livro> buscarPorAutor(String autor, Pageable pageable) {
 		return livroRepository.findByAutorContainingIgnoreCase(autor, pageable);
 	}
 
 	@Override
-	public Optional<Livro> findByIsbn(String isbn) {
+	public Optional<Livro> buscarPorIsbn(String isbn) {
 		return livroRepository.findByIsbn(isbn);
 	}
 

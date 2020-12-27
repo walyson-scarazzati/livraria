@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import br.com.livraria.model.Livro;
 
 @Repository
-public interface LivroRepository extends JpaRepository<Livro, Long>{
+public interface ILivroRepository extends JpaRepository<Livro, Long>{
 	Page<Livro> findByTituloContainingIgnoreCase(String nome, Pageable pageable);
   
 	Page<Livro> findByAutorContainingIgnoreCase(String autor, Pageable pageable);

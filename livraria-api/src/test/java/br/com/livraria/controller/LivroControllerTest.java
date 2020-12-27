@@ -55,7 +55,7 @@ public class LivroControllerTest {
 		Livro livro = Livro.builder().id(id).titulo(createNewLivro().getTitulo()).autor(createNewLivro().getAutor())
 				.isbn(createNewLivro().getIsbn()).build();
 
-		BDDMockito.given(livroService.findAll(Mockito.any(Livro.class), Mockito.any(Pageable.class)))
+		BDDMockito.given(livroService.listarLivros(Mockito.any(Livro.class), Mockito.any(Pageable.class)))
 				.willReturn(new PageImpl<Livro>(Arrays.asList(livro), PageRequest.of(0, 100), 1));
 
 		// execução
@@ -81,7 +81,7 @@ public class LivroControllerTest {
 				.preco(createNewLivro().getPreco()).dataPublicacao(createNewLivro().getDataPublicacao())
 				.imagemCapa(createNewLivro().getImagemCapa()).isbn(createNewLivro().getIsbn()).build();
 
-		BDDMockito.given(livroService.findByIsbn(isbn)).willReturn(Optional.of(livro));
+		BDDMockito.given(livroService.buscarPorIsbn(isbn)).willReturn(Optional.of(livro));
 
 		// execução ou when
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(LIVRO_API.concat("/" + isbn))
@@ -142,7 +142,7 @@ public class LivroControllerTest {
 		Livro updatingLivro = Livro.builder().id(1l).titulo("some title").autor("some author").preco(3.5)
 				.dataPublicacao(date).imagemCapa("1234").isbn("321").build();
 
-		BDDMockito.given(livroService.findById(id)).willReturn(Optional.of(updatingLivro));
+		BDDMockito.given(livroService.buscarPorId(id)).willReturn(Optional.of(updatingLivro));
 
 		Livro updatedLivro = Livro.builder().id(id).autor("Robson").titulo("As aventuras").isbn("321").build();
 
@@ -166,7 +166,7 @@ public class LivroControllerTest {
 	public void testExcluir() throws Exception {
 
 		// cenário ou given
-		BDDMockito.given(livroService.findById(Mockito.anyLong()))
+		BDDMockito.given(livroService.buscarPorId(Mockito.anyLong()))
 				.willReturn(Optional.of(Livro.builder().id(1l).build()));
 
 		// execução ou when
@@ -188,7 +188,7 @@ public class LivroControllerTest {
 		Livro livro = Livro.builder().id(1l).titulo(titulo).autor("some author").preco(3.5).dataPublicacao(date)
 				.imagemCapa("1234").isbn("321").build();
 
-		BDDMockito.given(livroService.findAll(Mockito.any(Livro.class), Mockito.any(Pageable.class)))
+		BDDMockito.given(livroService.listarLivros(Mockito.any(Livro.class), Mockito.any(Pageable.class)))
 				.willReturn(new PageImpl<Livro>(Arrays.asList(livro), PageRequest.of(0, 100), 1));
 
 		// execução
@@ -214,7 +214,7 @@ public class LivroControllerTest {
 		Livro livro = Livro.builder().id(1l).titulo("titulo").autor(autor).preco(3.5).dataPublicacao(date)
 				.imagemCapa("1234").isbn("321").build();
 
-		BDDMockito.given(livroService.findAll(Mockito.any(Livro.class), Mockito.any(Pageable.class)))
+		BDDMockito.given(livroService.listarLivros(Mockito.any(Livro.class), Mockito.any(Pageable.class)))
 				.willReturn(new PageImpl<Livro>(Arrays.asList(livro), PageRequest.of(0, 100), 1));
 
 		// execução

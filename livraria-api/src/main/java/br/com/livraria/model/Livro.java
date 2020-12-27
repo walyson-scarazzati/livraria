@@ -16,25 +16,17 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Data
 @Builder
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@ToString 
-@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
 @Table(name = "livros")
 public class Livro implements Serializable {
 	
-	private static final long serialVersionUID = -3465813074586302847L;
+	private static final long serialVersionUID = 1L;
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 

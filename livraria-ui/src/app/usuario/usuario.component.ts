@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class UsuarioComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private usuarioService: UsuarioService,
-    private router: Router, private route: ActivatedRoute) { }
+              private router: Router, private route: ActivatedRoute) { }
 
 
   form: FormGroup;
@@ -22,12 +22,19 @@ export class UsuarioComponent implements OnInit {
   submitted = false;
   isSalvarOuEditar: any;
   isDetalhe: any;
+  roles: [];
 
   ngOnInit() {
-    this.isSalvarOuEditar =  this.usuarioService.getSalvarOuEditar();
-    this.isDetalhe = this.usuarioService.getDetalhe();
-    console.log(this.isSalvarOuEditar);
-    this.form = this.formBuilder.group({
+   this.usuarioService.listarRoles().subscribe(
+    (response) => {
+      console.log('response received');
+      this.roles = response;
+    });
+
+   this.isSalvarOuEditar =  this.usuarioService.getSalvarOuEditar();
+   this.isDetalhe = this.usuarioService.getDetalhe();
+   console.log(this.isSalvarOuEditar);
+   this.form = this.formBuilder.group({
       id: [],
       nome: ['', Validators.required],
       email: ['', Validators.required],

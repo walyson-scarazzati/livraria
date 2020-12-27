@@ -25,7 +25,7 @@ public class UsuarioRepositoryTest {
 	TestEntityManager entityManager;
 
 	@Autowired
-	UsuarioRepository repository;
+	IUsuarioRepository repository;
 
 	@Test
 	@DisplayName("Deve retornar verdadeiro quando existir um email na base")

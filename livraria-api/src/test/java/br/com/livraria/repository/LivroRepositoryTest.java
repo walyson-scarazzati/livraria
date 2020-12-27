@@ -26,7 +26,7 @@ public class LivroRepositoryTest {
 	TestEntityManager entityManager;
 
 	@Autowired
-	LivroRepository repository;
+	ILivroRepository repository;
 
 	@Test
 	@DisplayName("Deve retornar verdadeiro quando existir um livro na base com isbn informado")
