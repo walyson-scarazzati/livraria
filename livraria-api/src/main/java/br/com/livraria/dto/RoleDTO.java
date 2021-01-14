@@ -14,11 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoleDTO {
 	
-	@ApiModelProperty(value = "Código da role")
-	@NotEmpty(message = "{role.id.empty}")
+	@ApiModelProperty(value = "${role.id}")
 	private Long id;
 	
-	@ApiModelProperty(value = "Descrição da role")
+	@ApiModelProperty(value = "${role.descricao}")
 	@NotEmpty(message = "{role.descricao.empty}")
 	private String descricao;
 

@@ -17,11 +17,12 @@ import {UsuarioComponent} from './usuario/usuario.component';
 import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.component';
 import {SharedModule} from './components/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import {NavBarComponent} from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavBarComponent,
     ListLivroComponent,
     AddLivroComponent,
     EditLivroComponent,

@@ -15,6 +15,13 @@ import { Observable } from 'rxjs';
 export class ListLivroComponent implements OnInit {
 
   livros: Observable<Livro[]>;
+  count = 0;
+  page = 1;
+  size = 2;
+  currentIndex = -1;
+  livroList: any[] = [];
+  isSalvarOuEditar = false;
+  isDetalhe = false;
 
   constructor(private livroService: LivroService,
     private router: Router) {
@@ -26,8 +33,17 @@ export class ListLivroComponent implements OnInit {
   }
 
   reloadData() {
-    this.livros = this.livroService.listar();
+    
     console.log(this.livros);
+    const params = this.getRequestParams(this.page, this.size);
+   this.livroService.listar(params)
+    .subscribe(
+       data => {
+      this.livroList = data.content;
+      this.count = data.totalElements;
+      console.log(this.count);
+    }
+    );
   }
 
   deleteLivro(id: number) {
@@ -45,10 +61,39 @@ export class ListLivroComponent implements OnInit {
   }
 
   editLivro(id: number){
-    this.router.navigate(['update', id]);
+    this.router.navigate(['edit-livro', id]);
   }
 
   addLivro(): void {
+    this.livroService.setSalvarOuEditar(!this.isSalvarOuEditar);
+    this.livroService.setDetalhe(!this.isDetalhe);
     this.router.navigate(['add-livro']);
   }
+
+  handlePageChange(event): void {
+    this.page = event;
+    this.reloadData();
+  }
+
+  getRequestParams(page, size): any {
+    // tslint:disable-next-line:prefer-const
+    let params = {};
+
+    if (page) {
+      params[`page`] = page - 1;
+    }
+
+    if (size) {
+      params[`size`] = size;
+    }
+
+    return params;
+  }
+
+  procurar(): void {
+    this.livroService.setSalvarOuEditar(!this.isSalvarOuEditar);
+    this.livroService.setDetalhe(!this.isDetalhe);
+    this.router.navigate(['usuario']);
+  }
+
 }

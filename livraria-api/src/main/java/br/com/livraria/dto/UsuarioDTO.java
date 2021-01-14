@@ -14,19 +14,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UsuarioDTO {
 	
-	@ApiModelProperty(value = "Código do usuário")
-	@NotEmpty(message = "{usuario.id.empty}")
+	@ApiModelProperty(value = "${usuario.id}")
 	private Long id;
 	
-	@ApiModelProperty(value = "Nome do usuário")
+	@ApiModelProperty(value = "${usuario.nome}")
 	@NotEmpty(message = "{usuario.nome.empty}")
 	private String nome;
 	
-	@ApiModelProperty(value = "Email do usuário")
+	@ApiModelProperty(value = "${usuario.email}")
 	@NotEmpty(message = "{usuario.email.empty}")
 	private String email;
 	
-	@ApiModelProperty(value = "Senha do usuário")
+	@ApiModelProperty(value = "${usuario.senha}")
 	@NotEmpty(message = "{usuario.senha.empty}")
 	private String senha;
 	

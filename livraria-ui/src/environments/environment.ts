@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-    BASE_URL: 'http://localhost:9191/livraria-api'
+    BASE_URL: 'http://localhost:8080/livraria-api'
 };
 
 /*

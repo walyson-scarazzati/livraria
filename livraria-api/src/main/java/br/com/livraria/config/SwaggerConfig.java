@@ -2,6 +2,8 @@ package br.com.livraria.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -13,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @Configuration
+@PropertySource("classpath:swagger.properties")
 public class SwaggerConfig {
 
     @Bean
@@ -37,6 +40,6 @@ public class SwaggerConfig {
     private Contact contact() {
         return new Contact("Walyson Scarazzati da Silva",
                 "https://github.com/walyson-scarazzati/livraria.git",
-                "walsyon.scarazzati@gmail.com");
+                "walyson.scarazzati@gmail.com");
     }
 }

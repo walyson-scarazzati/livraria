@@ -138,7 +138,7 @@ export class ListUsuarioComponent implements OnInit {
   editUsuario(id: number) {
     this.usuarioService.setSalvarOuEditar(this.isSalvarOuEditar);
     this.usuarioService.setDetalhe(!this.isDetalhe);
-    this.router.navigate(['usuario']);
+    this.router.navigate(['usuario'], { queryParams: {id}});
   }
 
   addUsuario(): void {

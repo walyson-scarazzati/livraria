@@ -19,32 +19,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LivroDTO {
 
-	@ApiModelProperty(value = "Código do livro")
-	@NotEmpty(message = "{livro.id.empty}")
+	@ApiModelProperty(value = "${livro.id}")
 	private Long id;
 
-	@ApiModelProperty(value = "Isbn do livro")
+	@ApiModelProperty(value = "${livro.isbn}")
 	@NotEmpty(message = "{livro.isbn.empty}")
 	private String isbn;
 
-	@ApiModelProperty(value = "Autor do livro")
+	@ApiModelProperty(value = "${livro.autor}")
 	@NotEmpty(message = "{livro.autor.empty}")
 	private String autor;
 
-	@ApiModelProperty(value = "Título do livro")
+	@ApiModelProperty(value = "${livro.titulo}")
 	@NotEmpty(message = "{livro.titulo.empty}")
 	private String titulo;
 
-	@ApiModelProperty(value = "Preço do livro")
+	@ApiModelProperty(value = "${livro.preco}")
 	@NotEmpty(message = "{livro.preco.empty}")
 	private Double preco;
 
-	@ApiModelProperty(value = "Data da publicação do livro")
+	@ApiModelProperty(value = "${livro.dataPublicacao}")
 	@NotEmpty(message = "{livro.dataPublicacao.empty}")
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
 	private Date dataPublicacao;
 
-	@ApiModelProperty(value = "Imagem da capa do livro")
+	@ApiModelProperty(value = "${livro.imagemCapa}")
 	@NotEmpty(message = "{livro.imagemCapa.empty}")
 	private String imagemCapa;
 

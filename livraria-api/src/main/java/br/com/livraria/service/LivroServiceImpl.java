@@ -1,5 +1,8 @@
 package br.com.livraria.service;
 
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Example;
@@ -9,9 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.livraria.config.ReportCreationManager;
 import br.com.livraria.exception.BusinessException;
 import br.com.livraria.model.Livro;
 import br.com.livraria.repository.ILivroRepository;
+import net.sf.jasperreports.engine.JRException;
 
 @Service
 @Transactional
@@ -75,6 +80,13 @@ public class LivroServiceImpl implements ILivroService {
 	@Override
 	public Optional<Livro> buscarPorIsbn(String isbn) {
 		return livroRepository.findByIsbn(isbn);
+	}
+	
+	@Override
+	public String gerarPdfLivro(OutputStream outputStream) throws JRException, FileNotFoundException {
+		List<Livro> livroList = (List<Livro>) livroRepository.findAll();
+		return ReportCreationManager.generateReportLivro(livroList, outputStream);
+
 	}
 
 }

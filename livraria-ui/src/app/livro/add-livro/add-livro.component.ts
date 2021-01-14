@@ -14,56 +14,63 @@ export class AddLivroComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,private livroService: LivroService,
     private router: Router) { }
 
-
- // addForm: FormGroup;
-
+  form: FormGroup;
   livro: Livro = new Livro();
   submitted = false;
+  isSalvarOuEditar: any;
+  isDetalhe: any;
 
   ngOnInit() {
-  /*   this.addForm = this.formBuilder.group({
-      isbn: [],
-      titulo: ['', Validators.required],
-      autor: ['', Validators.required],
-      preco: ['', Validators.required],
-      dataPublicacao: ['', Validators.required],
-      imagemCapa: ['', Validators.required]
-    }); */
+
+     this.isSalvarOuEditar =  this.livroService.getSalvarOuEditar();
+     this.isDetalhe = this.livroService.getDetalhe();
+     console.log(this.isSalvarOuEditar);
+     this.form = this.formBuilder.group({
+        id: [],
+        isbn: [],
+        titulo: ['', Validators.required],
+        autor: ['', Validators.required],
+        preco: ['', Validators.required],
+        dataPublicacao: ['', Validators.required],
+        imagemCapa: ['', Validators.required]
+      });
 
   }
 
-  newLivro(): void {
-    this.submitted = false;
-    this.livro = new Livro();
+  verificaValidTouched(campo) {
+    return !campo.valid && this.submitted;
   }
 
-      //this.livrariaService.salvar(this.addForm.value)
+  aplicaCssErro(campo) {
+    return {
+      'has-error': this.verificaValidTouched(campo),
+      'has-feedback': this.verificaValidTouched(campo)
+    };
+  }
 
-    save() {
+  saveOrUpdate(formulario) {
+    if (formulario.id === undefined) {
+      this.livroService.salvar(formulario.value)
+      .subscribe(data => console.log(data), error => console.log(error));
+      this.livro = new Livro();
+      this.gotoList();
+      } else {
+        this.livroService.atualizar(formulario.value)
+        .subscribe(data => console.log(data), error => console.log(error));
+        this.livro = new Livro();
+        this.gotoList();
+    }
 
-   this.livroService.salvar(this.livro)
-     .subscribe(data => console.log(data), error => console.log(error));
- this.livro = new Livro();
-  this.gotoList();
- }
+   }
 
- // save() {
- //   this.livrariaService.salvar(this.addForm.value)
- //     .subscribe( data => {
- //       this.router.navigate(['list-livraria']);
- //     });
- // }
-
- // save() {
- //   this.livrariaService.salvar(this.livraria)
- //     .subscribe(data => console.log(data), error => console.log(error));
-  //  this.livraria = new Livraria();
- //   this.gotoList();
- // }
-
-  onSubmit() {
+  onSubmit(formulario) {
     this.submitted = true;
-    this.save();
+    if (formulario.invalid) {
+      return;
+  } else {
+    this.saveOrUpdate(formulario);
+  }
+
   }
 
   gotoList() {

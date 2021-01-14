@@ -70,9 +70,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return roleRepository.findAll();
 	}
 
+	@Override
 	public String gerarPdfUsuario(OutputStream outputStream) throws JRException, FileNotFoundException {
 		List<Usuario> usuarioList = (List<Usuario>) usuarioRepository.findAll();
-		return ReportCreationManager.generateReport(usuarioList, outputStream);
+		return ReportCreationManager.generateReportUsuario(usuarioList, outputStream);
 
 	}
 }

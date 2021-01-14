@@ -59,15 +59,15 @@
                     <td>{{usuario.role.descricao}}</td>
                     <td>
                         <button class="btn btn-light" (click)="editUsuario(usuario.id)" title="Editar">
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" data-original-title="Editar"></i></a>
+                        <a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" data-original-title="Editar"></i></a>
                         </button>
 
                         <button class="btn btn-light" (click)="detailsUsuario(usuario.id)" style="margin-left: 20px;" title="Visualizar">
-                          <a href="#detailsUsuario" class="search" data-toggle="modal"> <i class="material-icons" data-toggle="tooltip" title="Visualizar" data-toggle="Visualizar">search</i></a>
+                          <a  class="search" data-toggle="modal"> <i class="material-icons" data-toggle="tooltip" title="Visualizar" data-toggle="Visualizar">search</i></a>
                         </button>
 
                         <button class="btn btn-light" (click)="deleteUsuario(usuario.id)" style="margin-left: 10px" title="Deletar">
-                          <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Deletar" data-original-title="Deletar"></i></a>
+                          <a  class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Deletar" data-original-title="Deletar"></i></a>
                         </button>
                     </td>
                 </tr>

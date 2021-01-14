@@ -1,41 +1,94 @@
-<h3>Livro</h3>
-<div [hidden]="submitted" style="width: 400px;">
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="titulo">Título:</label>
-            <input type="text" class="form-control" id="titulo" required="true" [(ngModel)]="livro.titulo" name="titulo">
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-horizontal">
+    <div class="form-group" [ngClass]="aplicaCssErro(isbn)">
+
+        <div class="col-sm-12">
+            <label for="isbn" class="control-label">Isbn</label>
         </div>
 
-        <div class="form-group">
-            <label for="autor">Autor</label>
-            <input type="text" class="form-control" id="autor" required [(ngModel)]="livro.autor" name="autor">
+        <div class="col-sm-12">
+            <input type="text" class="form-control" name="isbn" id="isbn" placeholder="Isbn" [ngModel]="livro.isbn" [readonly]="!isDetalhe" required #isbn="ngModel">
+
+            <app-campo-control-erro [mostrarErro]="verificaValidTouched(isbn)" msgErro="Isbn é obrigatório.">
+            </app-campo-control-erro>
+        </div>
+    </div>
+    <div class="form-group" [ngClass]="aplicaCssErro(titulo)">
+
+        <div class="col-sm-12">
+            <label for="titulo" class="control-label">Título</label>
         </div>
 
-        <div class="form-group">
-            <label for="preco">Preço</label>
-            <input type="text" class="form-control" id="preco" required [(ngModel)]="livro.preco" name="preco">
+        <div class="col-sm-12">
+            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Título" [ngModel]="livro.titulo" [readonly]="!isDetalhe" required #titulo="ngModel">
+
+            <app-campo-control-erro [mostrarErro]="verificaValidTouched(titulo)" msgErro="Título é obrigatório.">
+            </app-campo-control-erro>
+        </div>
+    </div>
+
+    <div class="form-group" [ngClass]="aplicaCssErro(autor)">
+        <div class="col-sm-12">
+            <label for="autor" class="control-label">Autor</label>
+        </div>
+        <div class="col-sm-12">
+            <input type="text" class="form-control" name="autor" id="autor" placeholder="Autor" [ngModel]="livro.autor" [readonly]="!isDetalhe" required #autor="ngModel">
+
+            <app-campo-control-erro [mostrarErro]="verificaValidTouched(autor)" msgErro="Autor é obrigatório">
+            </app-campo-control-erro>
+        </div>
+    </div>
+
+    <div class="form-group" [ngClass]="aplicaCssErro(preco)">
+
+        <div class="col-sm-12">
+            <label for="preco" class="control-label">Preço</label>
         </div>
 
-        <div class="form-group">
-            <label for="dataPublicacao">Data da Publicação:</label>
+        <div class="col-sm-12">
+            <input type="text" class="form-control" name="preco" id="preco" placeholder="Preço" [ngModel]="livro.preco" [readonly]="!isDetalhe" required #preco="ngModel">
+
+            <app-campo-control-erro [mostrarErro]="verificaValidTouched(preco)" msgErro="Preço é obrigatório.">
+            </app-campo-control-erro>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-sm-12">
+            <label for="dataPublicacao" class="control-label">Data da Publicação</label>
+        </div>
+
+        <div class="col-sm-12">
             <mat-form-field>
                 <input matInput [matDatepicker]="picker" placeholder="Escolher a data da publicação" id="dataPublicacao" name="dataPublicacao" [(ngModel)]="livro.dataPublicacao" readonly (click)="picker.open()">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-
         </div>
-        <div class="form-group">
-            <label for="imagemCapa">Imagem da Capa:</label>
-            <input type="text" class="form-control" id="imagemCapa" name="imagemCapa" required [(ngModel)]="livro.imagemCapa">
+    </div>
+
+    <div class="form-group" [ngClass]="aplicaCssErro(imagemCapa)">
+
+        <div class="col-sm-12">
+            <label for="imagemCapa" class="control-label">Imagem da Capa</label>
         </div>
 
-        <button type="submit" class="btn btn-success">Salvar</button>
-    </form>
-</div>
+        <div class="col-sm-12">
+            <input type="text" class="form-control" name="imagemCapa" id="imagemCapa" placeholder="Imagem da Capa" [ngModel]="livro.imagemCapa" [readonly]="!isDetalhe" required #imagemCapa="ngModel">
 
-<div [hidden]="!submitted">
-    <h4>You submitted successfully!</h4>
-    <!-- <button class="btn btn-success" (click)="newEmployee()">Add</button> -->
-</div>
-_________
+            <app-campo-control-erro [mostrarErro]="verificaValidTouched(imagemCapa)" msgErro="Imagem da Capa é obrigatório.">
+            </app-campo-control-erro>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-1" *ngIf="isDetalhe">
+                <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
+            </div>
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-info" (click)="gotoList()">Voltar</button>
+            </div>
+        </div>
+    </div>
+</form>

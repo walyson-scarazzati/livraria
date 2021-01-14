@@ -27,7 +27,7 @@ export class UsuarioService {
   }
 
   getLivroById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.baseUrl + id);
+    return this.http.get<ApiResponse>(`${this.baseUrl}/${id}`);
   }
 
   salvar(usuario: Object): Observable<Object> {

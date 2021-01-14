@@ -1,11 +1,14 @@
 package br.com.livraria.service;
 
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import br.com.livraria.model.Livro;
+import net.sf.jasperreports.engine.JRException;
 
 public interface ILivroService {
 	
@@ -24,5 +27,7 @@ public interface ILivroService {
 	Page<Livro> buscarPorAutor(String autor, Pageable pageRequest);
 	
 	Optional<Livro> buscarPorIsbn(String isbn);
+	
+    String gerarPdfLivro(OutputStream outputStream) throws JRException, FileNotFoundException;
 	
 }

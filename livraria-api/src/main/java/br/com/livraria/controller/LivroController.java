@@ -1,8 +1,10 @@
 package br.com.livraria.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -33,21 +35,23 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jasperreports.engine.JRException;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("livros")
 @RequiredArgsConstructor
-@Api(description = "Endpoint para criar, atualizar, deletar, excluir e buscar os Livros.", tags = {"Livro API"})
+@Api(description = "Endpoint para criar, atualizar, deletar, excluir e buscar o Livro.", tags = {"Livro API"})
 @Slf4j
 public class LivroController {
 
 	@Autowired
 	private LivroServiceImpl livrariaService;
 
-	private final ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-	@ApiOperation("Listar livros")
+	@ApiOperation(value = "${api.livro.listar}")
 	@ApiResponses(value = {
 		    @ApiResponse(code = 200, message = "Retorna a lista de livro"),
 		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
@@ -64,7 +68,7 @@ public class LivroController {
 		return new PageImpl<LivroDTO>(list, pageRequest, result.getTotalElements());
 	}
 
-	@ApiOperation("Criar um livro")
+	@ApiOperation(value = "${api.livro.salvar}")
 	@PostMapping(value = "/salvar")
 	public LivroDTO salvar(@Valid @RequestBody LivroDTO dto) {
 		log.info("Criando um livro por isbn: {}", dto.getIsbn());
@@ -73,11 +77,11 @@ public class LivroController {
 		return this.modelMapper.map(entity, LivroDTO.class);
 	}
 
-	@ApiOperation("Atualizar um livro")
+	@ApiOperation(value = "${api.livro.editar}")
 	@PutMapping("/{id}")
 	public LivroDTO editar(@PathVariable(value = "id") Long id, @Valid @RequestBody LivroDTO dto) {
 
-		log.info("Atualizar um livro por id: {}", id);
+		log.info("Editar um livro por id: {}", id);
 		return livrariaService.buscarPorId(id).map(livro -> {
 			livro.setAutor(dto.getAutor());
 			livro.setTitulo(dto.getTitulo());
@@ -86,7 +90,7 @@ public class LivroController {
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
-	@ApiOperation("Excluir um livro por id")
+	@ApiOperation("${api.livro.excluir}")
 	@DeleteMapping("/{id}")
 	public void excluir(@PathVariable(value = "id") Long id) {
 		log.info("Excluir um livro por id: {}", id);
@@ -94,7 +98,7 @@ public class LivroController {
 		livrariaService.excluir(livro);
 	}
 	
-    @ApiOperation("Obter detalhes de um livro pelo id")
+    @ApiOperation("${api.livro.obterId}")
 	@GetMapping("{id}")
     public LivroDTO buscarPorId(@PathVariable Long id) {
         log.info("Obter detalhes de um livro pelo id: {}", id);
@@ -104,7 +108,7 @@ public class LivroController {
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-	@ApiOperation("Buscar usuários por título")
+	@ApiOperation("${api.livro.buscarTitulo}")
 	@GetMapping("/titulo/{titulo}")
 	public Page<LivroDTO> buscarPorTitulo(@RequestParam(value = "titulo") String titulo, Pageable pageable) {
 		Page<Livro> result = livrariaService.buscarPorTitulo(titulo, pageable);
@@ -114,7 +118,7 @@ public class LivroController {
 		return new PageImpl<LivroDTO>(list, pageable, result.getTotalElements());
 	}
 
-	@ApiOperation("Buscar usuários por autor")
+	@ApiOperation("${api.livro.buscarAutor}")
 	@GetMapping("/autor/{autor}")
 	public Page<LivroDTO> buscarPorAutor(@RequestParam(value = "autor") String autor, Pageable pageable) {
 		Page<Livro> result = livrariaService.buscarPorAutor(autor, pageable);
@@ -124,5 +128,18 @@ public class LivroController {
 		return new PageImpl<LivroDTO>(list, pageable, result.getTotalElements());
 
 	}
+	
+	@ApiOperation("${api.livro.gerarPDF}")
+	 @GetMapping(path = "/pdf")
+	  public void gerarPdfLivro(HttpServletResponse response) throws JRException, IOException {
+       try {
+    	   livrariaService.gerarPdfLivro(response.getOutputStream());
+           response.setContentType("application/pdf");
+           response.addHeader("Content-Disposition", "inline; filename=livroReport.pdf;");
+       } catch (JRException | IOException e) {
+           e.printStackTrace();
+       }
+	}
+
 
 }
