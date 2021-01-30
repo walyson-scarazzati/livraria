@@ -32,37 +32,22 @@ public class Livro implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
     
-    @NotNull
+    @NotNull(message = "{livro.isbn.empty}")
 	private String isbn;
     
-    @NotNull
-    
-    //para colocar esse field como obrigatório no lombok
-    //@NonNull
+    @NotNull(message = "{livro.autor.empty}")
 	private String autor;
     
-    @NotNull
-    
-    //para colocar esse field como obrigatório no lombok
-   // @NonNull
+    @NotNull(message = "{livro.titulo.empty}")
 	private String titulo; 
 	
-    @NotNull
-    
-    //para colocar esse field como obrigatório no lombok
-   // @NonNull
+    @NotNull(message = "{livro.preco.empty}")
 	private Double preco; 
 	
-    @NotNull
+    @NotNull(message = "{livro.dataPublicacao.empty}")
     @JsonFormat(pattern="yyyy-MM-dd", shape = Shape.STRING)
-    
-    //para colocar esse field como obrigatório no lombok
-   // @NonNull
     private Date dataPublicacao; 
 	
-    @NotNull
-    
-    //para colocar esse field como obrigatório no lombok
-   // @NonNull
+    @NotNull(message = "{livro.imagemCapa.empty}")
 	private String imagemCapa;
 }

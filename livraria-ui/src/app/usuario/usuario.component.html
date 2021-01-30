@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-sm-12">
-            <input type="text" class="form-control" name="senha" id="senha" placeholder="senha" [ngModel]="usuario.senha" [readonly]="!isDetalhe" required #senha="ngModel">
+            <input type="password" class="form-control" name="senha" id="senha" placeholder="senha" [ngModel]="usuario.senha" [readonly]="!isDetalhe" required #senha="ngModel">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(senha)" msgErro="Senha é obrigatório.">
             </app-campo-control-erro>

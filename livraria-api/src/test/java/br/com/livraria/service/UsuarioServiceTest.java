@@ -27,6 +27,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import br.com.livraria.exception.BusinessException;
 import br.com.livraria.model.Livro;
 import br.com.livraria.repository.ILivroRepository;
+import br.com.livraria.service.impl.LivroServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")

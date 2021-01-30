@@ -37,24 +37,15 @@ public class Usuario implements Serializable {
 	private Long id;
 	
 	@NotNull(message = "{usuario.nome.empty}")
-
-	// para colocar esse field como obrigatório no lombok
-	//@NonNull
 	private String nome;
 	
 	@Email(message = "{usuario.email.invalido}")
 	@Size(max = 254, message = "{usuario.email.size}")
 	@Column(unique = true)
 	@NotNull(message = "{usuario.email.empty}")
-
-	// para colocar esse field como obrigatório no lombok
-	//@NonNull
 	private String email;
 
 	@NotNull(message = "{usuario.senha.empty}")
-
-	// para colocar esse field como obrigatório no lombok
-	//@NonNull
 	@JsonIgnore
 	private String senha;
 	

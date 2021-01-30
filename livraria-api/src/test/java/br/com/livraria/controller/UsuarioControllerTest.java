@@ -29,7 +29,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.livraria.model.Usuario;
-import br.com.livraria.service.UsuarioServiceImpl;
+import br.com.livraria.service.impl.UsuarioServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")

@@ -32,7 +32,7 @@ import br.com.livraria.dto.RoleDTO;
 import br.com.livraria.dto.UsuarioDTO;
 import br.com.livraria.model.Role;
 import br.com.livraria.model.Usuario;
-import br.com.livraria.service.UsuarioServiceImpl;
+import br.com.livraria.service.impl.UsuarioServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

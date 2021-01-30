@@ -33,7 +33,6 @@ export class UsuarioComponent implements OnInit {
 
    this.isSalvarOuEditar =  this.usuarioService.getSalvarOuEditar();
    this.isDetalhe = this.usuarioService.getDetalhe();
-   console.log(this.isSalvarOuEditar);
    this.form = this.formBuilder.group({
       id: [],
       nome: ['', Validators.required],

@@ -1,4 +1,4 @@
-package br.com.livraria.service;
+package br.com.livraria.service.impl;
 
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
@@ -15,6 +15,7 @@ import br.com.livraria.model.Role;
 import br.com.livraria.model.Usuario;
 import br.com.livraria.repository.IRoleRepository;
 import br.com.livraria.repository.IUsuarioRepository;
+import br.com.livraria.service.IUsuarioService;
 import net.sf.jasperreports.engine.JRException;
 
 @Service

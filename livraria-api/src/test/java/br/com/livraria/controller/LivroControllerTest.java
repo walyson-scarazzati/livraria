@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.livraria.model.Livro;
-import br.com.livraria.service.LivroServiceImpl;
+import br.com.livraria.service.impl.LivroServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")

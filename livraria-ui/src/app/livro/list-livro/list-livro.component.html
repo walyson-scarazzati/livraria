@@ -6,14 +6,14 @@
     <div class="form-group">
         <div class="col-sm-6">
             <label for="nome">Titulo:</label>
-            <input id="nome" name="titulo" class="form-control ml-2 mr-2" placeholder="Colocar título">
+            <input id="nome" #tituloSearchInput name="titulo" class="form-control ml-2 mr-2" placeholder="Colocar título">
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-sm-6">
             <label for="nome">Autor:</label>
-            <input id="nome" name="autor" class="form-control ml-2 mr-2" placeholder="Colocar autor">
+            <input id="nome" #autorSearchInput name="autor" class="form-control ml-2 mr-2" placeholder="Colocar autor">
         </div>
     </div>
 
@@ -48,9 +48,18 @@
                     <td>{{livro.preco}}</td>
                     <td>{{livro.dataPublicacao.toString() | date:'dd-MMM-yyyy'}}</td>
                     <td>{{livro.imagemCapa}}</td>
-                    <td><button class="btn btn-success" (click)="editLivro(livro.id)">Editar</button>
-                        <button class="btn btn-info" (click)="detailsLivro(livro.id)" style="margin-left: 20px;">Visualizar</button>
-                        <button class="btn btn-danger" (click)="deleteLivro(livro.id)" style="margin-left: 10px">Deletar</button>
+                    <td>
+                        <button class="btn btn-light" (click)="editLivro(livro.id)" title="Editar">
+                            <a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" data-original-title="Editar"></i></a>
+                            </button>
+
+                        <button class="btn btn-light" (click)="detailsLivro(livro.id)" style="margin-left: 20px;" title="Visualizar">
+                              <a  class="search" data-toggle="modal"> <i class="material-icons" data-toggle="tooltip" title="Visualizar" data-toggle="Visualizar">search</i></a>
+                            </button>
+
+                        <button class="btn btn-light" (click)="deleteLivro(livro.id)" style="margin-left: 10px" title="Deletar">
+                              <a  class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Deletar" data-original-title="Deletar"></i></a>
+                            </button>
                     </td>
                 </tr>
             </tbody>

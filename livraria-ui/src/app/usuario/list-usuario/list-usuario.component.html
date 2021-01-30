@@ -12,7 +12,7 @@
     <div class="form-group">
         <div class="col-sm-6">
             <label for="email">Email:</label>
-            <input id="email" name="email" class="form-control ml-2 mr-2" placeholder="Colocar email">
+            <input id="email" #emailSearchInput name="email" class="form-control ml-2 mr-2" placeholder="Colocar email">
         </div>
     </div>
 
@@ -56,7 +56,7 @@
                   " [class.active]="i == currentIndex">
                     <td>{{usuario.nome}}</td>
                     <td>{{usuario.email}}</td>
-                    <td>{{usuario.role.descricao}}</td>
+                    <td>{{usuario.role === null ? ' ' : usuario.role.descricao}}</td>
                     <td>
                         <button class="btn btn-light" (click)="editUsuario(usuario.id)" title="Editar">
                         <a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" data-original-title="Editar"></i></a>

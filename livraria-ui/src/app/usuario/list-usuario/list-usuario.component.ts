@@ -8,8 +8,7 @@ import {
   distinctUntilChanged,
   filter
 } from "rxjs/operators";
-import { fromEvent } from 'rxjs';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subscription, of, fromEvent} from 'rxjs';
 
 @Component({
   selector: 'app-list-usuario',
@@ -28,6 +27,7 @@ export class ListUsuarioComponent implements OnInit {
   size = 2;
   currentIndex = -1;
   @ViewChild('nomeSearchInput', { static: true }) nomeSearchInput: ElementRef;
+  @ViewChild('emailSearchInput', { static: true }) emailSearchInput: ElementRef;
   isSearching: boolean;
   apiResponse: any;
 
@@ -45,14 +45,75 @@ export class ListUsuarioComponent implements OnInit {
 
     this.reloadData();
 
+    this.searchEventNome();
+
+    this.searchEventEmail();
+
+  }
+
+  searchEventNome(){
     fromEvent(this.nomeSearchInput.nativeElement, 'keyup').pipe(
 
       // get value
       map((event: any) => {
+        if (event.keyCode === 17 || event.keyCode === 91 || event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40 || event.keyCode === 13 || event.keyCode === 27) {
+          return;
+        }
         return event.target.value;
       })
-      // if character length greater then 2
-      , filter(data => data.length > 2)
+      // if character is empty
+      , filter((data: any) => {
+        if (!data || data == '') {
+          this.reloadData();
+          return false;
+        }
+        return true;
+      })
+      
+
+      // Time in milliseconds between key events
+      , debounceTime(1000)
+
+      // If previous query is diffent from current   
+      , distinctUntilChanged()
+
+      // subscription for response
+    ).subscribe((text: string) => {
+
+      this.isSearching = true;
+      
+
+      this.searchNome(text).subscribe( data => {
+        this.usuarioList = data.content;
+        this.count = data.totalElements;
+        this.isSearching = false;
+      
+      }, (err) => {
+        this.isSearching = false;
+        console.log('error', err);
+      });
+
+    });
+  }
+
+  searchEventEmail(){
+    fromEvent(this.emailSearchInput.nativeElement, 'keyup').pipe(
+
+      // get value
+      map((event: any) => {
+        if (event.keyCode === 17 || event.keyCode === 91 || event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40 || event.keyCode === 13 || event.keyCode === 27) {
+          return;
+        }
+        return event.target.value;
+      })
+      // if character is empty
+      , filter((data: any) => {
+        if (!data || data == '') {
+          this.reloadData();
+          return false;
+        }
+        return true;
+      })
 
       // Time in milliseconds between key events
       , debounceTime(1000)
@@ -65,10 +126,9 @@ export class ListUsuarioComponent implements OnInit {
 
       this.isSearching = true;
 
-      this.searchGetCall(text).subscribe( data => {
+      this.searchEmail(text).subscribe( data => {
         this.usuarioList = data.content;
         this.count = data.totalElements;
-        console.log(this.count);
         this.isSearching = false;
       
       }, (err) => {
@@ -77,14 +137,20 @@ export class ListUsuarioComponent implements OnInit {
       });
 
     });
-
   }
 
-  searchGetCall(nome: string) {
+  searchNome(nome: string) {
     if (nome === '') {
       return of([]);
     }
     return this.usuarioService.findByNome(nome);
+  }
+
+  searchEmail(email: string) {
+    if (email === '') {
+      return of([]);
+    }
+    return this.usuarioService.findByEmail(email);
   }
 
   reloadData() {
@@ -94,7 +160,6 @@ export class ListUsuarioComponent implements OnInit {
        data => {
       this.usuarioList = data.content;
       this.count = data.totalElements;
-      console.log(this.count);
     }
     );
 
@@ -124,7 +189,6 @@ export class ListUsuarioComponent implements OnInit {
     this.usuarioService.remover(id)
       .subscribe(
         data => {
-          console.log(data);
           this.reloadData();
         },
         error => console.log(error));

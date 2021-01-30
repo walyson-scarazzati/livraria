@@ -28,7 +28,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.livraria.dto.LivroDTO;
 import br.com.livraria.model.Livro;
-import br.com.livraria.service.LivroServiceImpl;
+import br.com.livraria.service.impl.LivroServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -110,7 +110,7 @@ public class LivroController {
 
 	@ApiOperation("${api.livro.buscarTitulo}")
 	@GetMapping("/titulo/{titulo}")
-	public Page<LivroDTO> buscarPorTitulo(@RequestParam(value = "titulo") String titulo, Pageable pageable) {
+	public Page<LivroDTO> buscarPorTitulo(@PathVariable(value = "titulo") String titulo, Pageable pageable) {
 		Page<Livro> result = livrariaService.buscarPorTitulo(titulo, pageable);
 		List<LivroDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, LivroDTO.class))
 				.collect(Collectors.toList());
@@ -120,7 +120,7 @@ public class LivroController {
 
 	@ApiOperation("${api.livro.buscarAutor}")
 	@GetMapping("/autor/{autor}")
-	public Page<LivroDTO> buscarPorAutor(@RequestParam(value = "autor") String autor, Pageable pageable) {
+	public Page<LivroDTO> buscarPorAutor(@PathVariable(value = "autor") String autor, Pageable pageable) {
 		Page<Livro> result = livrariaService.buscarPorAutor(autor, pageable);
 		List<LivroDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, LivroDTO.class))
 				.collect(Collectors.toList());

@@ -28,6 +28,6 @@ public class Role  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "{role.descricao.empty}")
 	private String descricao;
 }
