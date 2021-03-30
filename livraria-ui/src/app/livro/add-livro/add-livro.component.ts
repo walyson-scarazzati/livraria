@@ -3,11 +3,27 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {LivroService} from '../livro.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
 
 @Component({
   selector: 'app-add-livro',
   templateUrl: './add-livro.component.html',
-  styleUrls: ['./add-livro.component.css']
+  styleUrls: ['./add-livro.component.css'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class AddLivroComponent implements OnInit {
 
@@ -24,7 +40,6 @@ export class AddLivroComponent implements OnInit {
 
      this.isSalvarOuEditar =  this.livroService.getSalvarOuEditar();
      this.isDetalhe = this.livroService.getDetalhe();
-     console.log(this.isSalvarOuEditar);
      this.form = this.formBuilder.group({
         id: [],
         isbn: [],

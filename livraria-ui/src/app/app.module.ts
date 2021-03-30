@@ -18,6 +18,7 @@ import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.componen
 import {SharedModule} from './components/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
   declarations: [
@@ -42,11 +43,13 @@ import {NavBarComponent} from './nav-bar/nav-bar.component';
     ReactiveFormsModule,
     MaterialModule,
     SharedModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CurrencyMaskModule
   ],
   exports: [
     MaterialModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CurrencyMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

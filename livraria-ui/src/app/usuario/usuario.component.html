@@ -56,11 +56,11 @@
 
     <div class="form-group">
         <div class="row">
-            <div class="col-sm-1" *ngIf="isDetalhe">
-                <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
-            </div>
             <div class="col-sm-1">
                 <button type="submit" class="btn btn-info" (click)="gotoList()">Voltar</button>
+            </div>
+            <div class="col-sm-1" *ngIf="isDetalhe">
+                <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
             </div>
         </div>
     </div>

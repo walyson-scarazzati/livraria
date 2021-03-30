@@ -11,7 +11,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
-import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -22,8 +21,6 @@ public class SpringJpaConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        //ds.setDriverClassName("com.mysql.jdbc.Driver");
-        //com.mysql.cj.jdbc.Driver
         ds.setDriverClassName("com.mysql.jdbc.Driver");
         ds.setUrl("jdbc:mysql://localhost:3306/livraria?useSSL=false&createDatabaseIfNotExist=true");
         ds.setUsername("root");
@@ -57,13 +54,5 @@ public class SpringJpaConfig {
         props.setProperty("hibernate.hbm2ddl.auto", "update");
         return props;
     }
-    
-	/*
-	 * @Bean public HibernateJpaSessionFactoryBean
-	 * sessionFactory(EntityManagerFactory emf) { HibernateJpaSessionFactoryBean
-	 * factory = new HibernateJpaSessionFactoryBean();
-	 * factory.setEntityManagerFactory(emf); return factory; }
-	 */
-    
 
 }

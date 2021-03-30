@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-sm-12">
-            <input type="text" class="form-control" name="preco" id="preco" placeholder="Preço" [ngModel]="livro.preco" [readonly]="!isDetalhe" required #preco="ngModel">
+            <input type="text" class="form-control" name="preco" id="preco" placeholder="Preço" [ngModel]="livro.preco" [readonly]="!isDetalhe" required #preco="ngModel" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align:'left', allowNegative:'false', precision:'2' }">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(preco)" msgErro="Preço é obrigatório.">
             </app-campo-control-erro>
@@ -83,11 +83,11 @@
 
     <div class="form-group">
         <div class="row">
-            <div class="col-sm-1" *ngIf="isDetalhe">
-                <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
-            </div>
             <div class="col-sm-1">
                 <button type="submit" class="btn btn-info" (click)="gotoList()">Voltar</button>
+            </div>
+            <div class="col-sm-1" *ngIf="isDetalhe">
+                <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
             </div>
         </div>
     </div>

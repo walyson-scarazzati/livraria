@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -46,6 +48,7 @@ public class Livro implements Serializable {
 	
     @NotNull(message = "{livro.dataPublicacao.empty}")
     @JsonFormat(pattern="yyyy-MM-dd", shape = Shape.STRING)
+    @Temporal(TemporalType.DATE)
     private Date dataPublicacao; 
 	
     @NotNull(message = "{livro.imagemCapa.empty}")

@@ -1,8 +1,13 @@
 package br.com.livraria.dto;
 
+
+
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -35,12 +40,13 @@ public class LivroDTO {
 	private String titulo;
 
 	@ApiModelProperty(value = "${livro.preco}")
-	@NotEmpty(message = "{livro.preco.empty}")
+	@NotNull(message = "{livro.preco.empty}")
 	private Double preco;
 
 	@ApiModelProperty(value = "${livro.dataPublicacao}")
-	@NotEmpty(message = "{livro.dataPublicacao.empty}")
+	@NotNull(message = "{livro.dataPublicacao.empty}")
 	@JsonFormat(pattern = "yyyy-MM-dd", shape = Shape.STRING)
+	@Temporal(TemporalType.DATE)
 	private Date dataPublicacao;
 
 	@ApiModelProperty(value = "${livro.imagemCapa}")
