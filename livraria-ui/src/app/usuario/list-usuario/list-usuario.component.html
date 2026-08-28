@@ -23,9 +23,9 @@
         </div>
 
         <div class="col-sm-4">
-            <select class="form-control" name="perfil" id="perfil">
-            <option value="">Escolha o perfil</option>
-            <option *ngFor="let role of roles$ | async" [value]="role.descricao">{{role.descricao}}</option>
+            <select class="form-control" name="perfil" id="perfil" [(ngModel)]="selectedRoleId">
+            <option [ngValue]="null">Escolha o perfil</option>
+            <option *ngFor="let role of roles$ | async" [ngValue]="role.id">{{role.descricao}}</option>
           </select>
 
         </div>

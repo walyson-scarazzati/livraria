@@ -128,6 +128,16 @@ public class UsuarioController {
 		return new PageImpl<UsuarioDTO>(list, pageable, result.getTotalElements());
 	}
 
+	@ApiOperation("${api.usuario.buscarRole}")
+	@GetMapping("/role/{roleId}")
+	public Page<UsuarioDTO> buscarPorRole(@PathVariable(value = "roleId") Long roleId, Pageable pageable) {
+		Page<Usuario> result = usuarioService.buscarPorRole(roleId, pageable);
+		List<UsuarioDTO> list = result.getContent().stream().map(entity -> modelMapper.map(entity, UsuarioDTO.class))
+				.collect(Collectors.toList());
+
+		return new PageImpl<UsuarioDTO>(list, pageable, result.getTotalElements());
+	}
+
 	@ApiOperation("${api.usuario.listarRoles}")
 	@GetMapping("/roles")
 	public List<RoleDTO> listarRoles() {

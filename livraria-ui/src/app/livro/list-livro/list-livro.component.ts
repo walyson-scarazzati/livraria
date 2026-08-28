@@ -202,9 +202,22 @@ export class ListLivroComponent implements OnInit {
   }
 
   procurar(): void {
-    this.livroService.setSalvarOuEditar(!this.isSalvarOuEditar);
-    this.livroService.setDetalhe(!this.isDetalhe);
-    this.router.navigate(['add-livro']);
+    const titulo = this.tituloSearchInput.nativeElement.value;
+    const autor = this.autorSearchInput.nativeElement.value;
+
+    if (titulo) {
+      this.searchTitulo(titulo).subscribe(data => {
+        this.livroList = data.content;
+        this.count = data.totalElements;
+      }, error => console.log(error));
+    } else if (autor) {
+      this.searchAutor(autor).subscribe(data => {
+        this.livroList = data.content;
+        this.count = data.totalElements;
+      }, error => console.log(error));
+    } else {
+      this.reloadData();
+    }
   }
 
 }

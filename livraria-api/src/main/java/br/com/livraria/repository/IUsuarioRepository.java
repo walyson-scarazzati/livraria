@@ -16,6 +16,8 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	Page<Usuario> findByEmailContainingIgnoreCase(String email, Pageable pageable);
 
+	Page<Usuario> findByRoleId(Long roleId, Pageable pageable);
+
 	@Query(value = "SELECT * FROM usuarios ORDER BY id", countQuery = "SELECT count(*) FROM usuarios", nativeQuery = true)
 	Page<Usuario> findAllUsuariosWithPagination(Usuario usuario, Pageable pageable);
 

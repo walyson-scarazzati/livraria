@@ -67,6 +67,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
+	public Page<Usuario> buscarPorRole(Long roleId, Pageable pageable) {
+		return usuarioRepository.findByRoleId(roleId, pageable);
+	}
+
+	@Override
 	public List<Role> listarRoles() {
 		return roleRepository.findAll();
 	}

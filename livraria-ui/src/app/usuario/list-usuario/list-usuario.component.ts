@@ -28,6 +28,7 @@ export class ListUsuarioComponent implements OnInit {
   page = 1;
   size = 2;
   currentIndex = -1;
+  selectedRoleId: number = null;
   @ViewChild('nomeSearchInput', { static: true }) nomeSearchInput: ElementRef;
   @ViewChild('emailSearchInput', { static: true }) emailSearchInput: ElementRef;
   isSearching: boolean;
@@ -208,9 +209,29 @@ export class ListUsuarioComponent implements OnInit {
   }
 
   procurar(): void {
-    this.usuarioService.setSalvarOuEditar(!this.isSalvarOuEditar);
-    this.usuarioService.setDetalhe(!this.isDetalhe);
-    this.router.navigate(['usuario']);
+    const nome = this.nomeSearchInput.nativeElement.value;
+    const email = this.emailSearchInput.nativeElement.value;
+
+    if (this.selectedRoleId) {
+      this.usuarioService.findByRole(this.selectedRoleId, this.getRequestParams(this.page, this.size)).subscribe(
+        data => {
+          this.usuarioList = data.content;
+          this.count = data.totalElements;
+        },
+        error => console.log(error));
+    } else if (nome) {
+      this.searchNome(nome).subscribe(data => {
+        this.usuarioList = data.content;
+        this.count = data.totalElements;
+      }, error => console.log(error));
+    } else if (email) {
+      this.searchEmail(email).subscribe(data => {
+        this.usuarioList = data.content;
+        this.count = data.totalElements;
+      }, error => console.log(error));
+    } else {
+      this.reloadData();
+    }
   }
 
 }

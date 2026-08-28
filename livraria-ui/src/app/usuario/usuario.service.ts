@@ -50,6 +50,10 @@ export class UsuarioService {
     return this.http.get(this.baseUrl + '/email/' + email);
   }
 
+  findByRole(roleId: number, params): Observable<any> {
+    return this.http.get(this.baseUrl + 'role/' + roleId, { params });
+  }
+
   setSalvarOuEditar(salvarOuEditar) {
     this.salvarOuEditar = salvarOuEditar;
   }

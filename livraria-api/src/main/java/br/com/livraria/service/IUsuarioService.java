@@ -27,6 +27,8 @@ public interface IUsuarioService {
     Page<Usuario> buscarPorNome(String nome, Pageable pageable);
 	
     Page<Usuario> buscarPorEmail(String email, Pageable pageable);
+
+    Page<Usuario> buscarPorRole(Long roleId, Pageable pageable);
     
     List<Role> listarRoles();
     
