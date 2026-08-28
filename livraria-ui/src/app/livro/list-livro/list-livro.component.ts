@@ -164,12 +164,15 @@ export class ListLivroComponent implements OnInit {
         error => console.log(error));
   }
 
-  detailsLivro(id: number){
-    this.router.navigate(['details', id]);
+  detailsLivro(id: number) {
+    this.livroService.setDetalhe(this.isDetalhe);
+    this.router.navigate(['add-livro'], { queryParams: { id } });
   }
 
-  editLivro(id: number){
-    this.router.navigate(['edit-livro', id]);
+  editLivro(id: number) {
+    this.livroService.setSalvarOuEditar(this.isSalvarOuEditar);
+    this.livroService.setDetalhe(!this.isDetalhe);
+    this.router.navigate(['add-livro'], { queryParams: { id } });
   }
 
   addLivro(): void {
@@ -201,7 +204,7 @@ export class ListLivroComponent implements OnInit {
   procurar(): void {
     this.livroService.setSalvarOuEditar(!this.isSalvarOuEditar);
     this.livroService.setDetalhe(!this.isDetalhe);
-    this.router.navigate(['usuario']);
+    this.router.navigate(['add-livro']);
   }
 
 }

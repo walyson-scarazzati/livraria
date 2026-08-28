@@ -15,6 +15,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.component';
+import {PerfilComponent} from './perfil/perfil.component';
+import {ListPerfilComponent} from './perfil/list-perfil/list-perfil.component';
 import {SharedModule} from './components/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
@@ -30,7 +32,9 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     UploadFileComponent,
     DatePickerComponent,
     UsuarioComponent,
-    ListUsuarioComponent
+    ListUsuarioComponent,
+    PerfilComponent,
+    ListPerfilComponent
   ],
   imports: [
     BrowserModule,

@@ -3,5 +3,5 @@ export class Usuario {
   nome: string;
   email: string;
   senha: string;
-  perfil: string;
+  role: { id?: number, descricao?: string };
 }

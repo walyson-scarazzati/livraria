@@ -1,4 +1,5 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-horizontal">
+    <input type="hidden" name="id" [ngModel]="livro.id">
     <div class="form-group" [ngClass]="aplicaCssErro(isbn)">
 
         <div class="col-sm-12">
@@ -70,11 +71,15 @@
     <div class="form-group" [ngClass]="aplicaCssErro(imagemCapa)">
 
         <div class="col-sm-12">
-            <label for="imagemCapa" class="control-label">Imagem da Capa</label>
+            <label for="imagemCapaArquivo" class="control-label">Imagem da Capa</label>
         </div>
 
         <div class="col-sm-12">
-            <input type="text" class="form-control" name="imagemCapa" id="imagemCapa" placeholder="Imagem da Capa" [ngModel]="livro.imagemCapa" [readonly]="!isDetalhe" required #imagemCapa="ngModel">
+            <input type="file" class="form-control" id="imagemCapaArquivo" accept="image/*" (change)="onImagemSelecionada($event)" [disabled]="!isDetalhe">
+            <input type="hidden" name="imagemCapa" id="imagemCapa" [ngModel]="livro.imagemCapa" required #imagemCapa="ngModel">
+
+            <span *ngIf="enviandoImagem">Enviando imagem...</span>
+            <img *ngIf="livro.imagemCapa && !enviandoImagem" [src]="livro.imagemCapa" alt="Capa do livro" style="max-height: 150px; margin-top: 10px;">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(imagemCapa)" msgErro="Imagem da Capa é obrigatório.">
             </app-campo-control-erro>
@@ -87,7 +92,7 @@
                 <button type="submit" class="btn btn-info" (click)="gotoList()">Voltar</button>
             </div>
             <div class="col-sm-1" *ngIf="isDetalhe">
-                <button type="submit" class="btn btn-success">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
+                <button type="submit" class="btn btn-success" [disabled]="enviandoImagem">{{isSalvarOuEditar ? 'Salvar' : 'Editar'}}</button>
             </div>
         </div>
     </div>

@@ -26,8 +26,8 @@ export class UsuarioService {
     return this.http.get(`${this.baseUrl + 'roles'}`);
   }
 
-  getLivroById(id: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.baseUrl}/${id}`);
+  getUsuarioById(id: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.baseUrl}${id}`);
   }
 
   salvar(usuario: Object): Observable<Object> {

@@ -49,6 +49,13 @@ spring.datasource.password = 123456
 O banco `livraria` é criado automaticamente (`createDatabaseIfNotExist=true`) e as tabelas são
 atualizadas automaticamente pelo Hibernate (`spring.jpa.hibernate.ddl-auto = update`).
 
+> **Atenção:** [`SpringJpaConfig`](livraria-api/src/main/java/br/com/livraria/config/SpringJpaConfig.java)
+> define o `DataSource` manualmente (com URL/usuário/senha fixos em código), **ignorando** as
+> propriedades `spring.datasource.*` do `application.properties`. Ou seja, para rodar a API
+> localmente o MySQL precisa estar acessível exatamente em `localhost:3306` com usuário `root` e
+> senha `123456` — mudar o `application.properties` ou usar `--spring.datasource.url=...` na linha
+> de comando não tem efeito até essa classe ser ajustada para ler as propriedades.
+
 ### Subindo o MySQL com Docker
 
 Se não tiver um MySQL local, é possível subir um container com as mesmas credenciais:
@@ -83,6 +90,13 @@ cd livraria-ui
 npm install
 npm start   # equivalente a `ng serve`
 ```
+
+> **Nota:** o projeto usa Angular CLI 8 / Webpack 4, que depende de algoritmos removidos do
+> OpenSSL 3 (usado por padrão em versões recentes do Node.js). Se o `npm start` falhar com o erro
+> `error:0308010C:digital envelope routines::unsupported`, rode com:
+> ```bash
+> NODE_OPTIONS=--openssl-legacy-provider npm start
+> ```
 
 A aplicação sobe em `http://localhost:4200` e consome a API configurada em
 [`src/environments/environment.ts`](livraria-ui/src/environments/environment.ts)

@@ -1,4 +1,5 @@
 export class Livro {
+  id: number;
   isbn: number;
   titulo: string;
   autor: string;

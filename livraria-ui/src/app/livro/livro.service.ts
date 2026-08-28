@@ -14,6 +14,7 @@ export class LivroService {
 
   constructor(private http: HttpClient) { }
   baseUrl: string = environment.BASE_URL + '/livros/';
+  uploadUrl: string = environment.BASE_URL + '/uploads/imagem';
 
   salvarOuEditar;
   detalhe;
@@ -30,8 +31,14 @@ export class LivroService {
     return this.http.post(`${this.baseUrl + 'salvar'}`, livro);
   }
 
+  uploadImagem(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post(this.uploadUrl, formData, { responseType: 'text' });
+  }
+
   atualizar(livro: Livro): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(this.baseUrl + livro.isbn, livro);
+    return this.http.put<ApiResponse>(this.baseUrl + livro.id, livro);
   }
 
   remover(id: number): Observable<ApiResponse> {

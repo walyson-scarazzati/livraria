@@ -1,0 +1,45 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h2>Perfil</h2>
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-success" (click)="addRole()" style="margin: 10px;">Adicionar</button>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roleList | paginate : { id: 'listing_pagination',
+                    itemsPerPage: size,
+                    currentPage: page,
+                    totalItems: count
+                  }">
+                    <td>{{role.descricao}}</td>
+                    <td>
+                        <button class="btn btn-light" (click)="editRole(role.id)" title="Editar">
+                        <a class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar" data-original-title="Editar">edit</i></a>
+                        </button>
+
+                        <button class="btn btn-light" (click)="deleteRole(role.id)" style="margin-left: 10px" title="Deletar">
+                          <a  class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Deletar" data-original-title="Deletar">delete</i></a>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tr class="grid" *ngIf="!roleList?.length">
+                <td colspan="2">Dados não encontrados</td>
+            </tr>
+        </table>
+
+        <div *ngIf="roleList?.length">
+            <pagination-controls id="listing_pagination" maxSize="3" directionLinks="true" (pageChange)="handlePageChange($event)"></pagination-controls>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form-horizontal">
+    <input type="hidden" name="id" [ngModel]="usuario.id">
     <div class="form-group" [ngClass]="aplicaCssErro(nome)">
 
         <div class="col-sm-12">
@@ -25,14 +26,14 @@
         </div>
     </div>
 
-    <div class="form-group" [ngClass]="aplicaCssErro(senha)">
+    <div class="form-group" [ngClass]="aplicaCssErro(senha)" *ngIf="isDetalhe">
 
         <div class="col-sm-12">
             <label for="senha" class="control-label">Senha</label>
         </div>
 
         <div class="col-sm-12">
-            <input type="password" class="form-control" name="senha" id="senha" placeholder="senha" [ngModel]="usuario.senha" [readonly]="!isDetalhe" required #senha="ngModel">
+            <input type="password" class="form-control" name="senha" id="senha" placeholder="senha" [ngModel]="usuario.senha" required #senha="ngModel">
 
             <app-campo-control-erro [mostrarErro]="verificaValidTouched(senha)" msgErro="Senha é obrigatório.">
             </app-campo-control-erro>
@@ -46,9 +47,9 @@
         </div>
 
         <div class="col-sm-4">
-            <select class="form-control" name="perfil" id="perfil">
-            <option value="">Escolha o perfil</option>
-            <option *ngFor="let role of roles">{{role.descricao}}</option>
+            <select class="form-control" name="role" id="perfil" [ngModel]="usuario.role" [compareWith]="compareRoles" [disabled]="!isDetalhe">
+            <option [ngValue]="null">Escolha o perfil</option>
+            <option *ngFor="let role of roles$ | async" [ngValue]="role">{{role.descricao}}</option>
           </select>
 
         </div>

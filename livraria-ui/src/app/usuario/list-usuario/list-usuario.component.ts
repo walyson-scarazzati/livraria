@@ -2,6 +2,8 @@ import { Component, OnInit , Inject, Input, Output, ViewChild, ElementRef } from
 import {Router} from '@angular/router';
 import {Usuario} from '../usuario';
 import {UsuarioService} from '../usuario.service';
+import { RoleService } from '../../perfil/role.service';
+import { Role } from '../../perfil/role';
 import {
   debounceTime,
   map,
@@ -21,7 +23,7 @@ export class ListUsuarioComponent implements OnInit {
   isSalvarOuEditar = false;
   isDetalhe = false;
   usuarioList: any[] = [];
-  roles: [];
+  roles$: Observable<Role[]> = this.roleService.roles$;
   count = 0;
   page = 1;
   size = 2;
@@ -32,17 +34,11 @@ export class ListUsuarioComponent implements OnInit {
   apiResponse: any;
 
 
-  constructor(private usuarioService: UsuarioService, private router: Router) {
+  constructor(private usuarioService: UsuarioService, private roleService: RoleService, private router: Router) {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
   ngOnInit() {
-    this.usuarioService.listarRoles().subscribe(
-      (response) => {
-        console.log('response received');
-        this.roles = response;
-      });
-
     this.reloadData();
 
     this.searchEventNome();
@@ -196,7 +192,7 @@ export class ListUsuarioComponent implements OnInit {
 
   detailsUsuario(id: number) {
     this.usuarioService.setDetalhe(this.isDetalhe);
-    this.router.navigate(['usuario']);
+    this.router.navigate(['usuario'], { queryParams: { id } });
   }
 
   editUsuario(id: number) {

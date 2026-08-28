@@ -7,6 +7,8 @@ import {UploadFileComponent} from './components/upload-file/upload-file/upload-f
 import {DatePickerComponent} from './components/date-picker/date-picker/date-picker.component';
 import {UsuarioComponent} from './usuario/usuario.component';
 import {ListUsuarioComponent} from './usuario/list-usuario/list-usuario.component';
+import {PerfilComponent} from './perfil/perfil.component';
+import {ListPerfilComponent} from './perfil/list-perfil/list-perfil.component';
 
 
 const routes: Routes = [
@@ -17,7 +19,9 @@ const routes: Routes = [
   { path: 'upload-file', component: UploadFileComponent },
   { path: 'date-picker', component: DatePickerComponent },
   { path: 'list-usuario', component: ListUsuarioComponent },
-  { path: 'usuario', component: UsuarioComponent }
+  { path: 'usuario', component: UsuarioComponent },
+  { path: 'list-perfil', component: ListPerfilComponent },
+  { path: 'perfil', component: PerfilComponent }
 ];
 
 @NgModule({

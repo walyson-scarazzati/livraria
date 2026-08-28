@@ -1,6 +1,6 @@
 import {Livro} from '../livro';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {LivroService} from '../livro.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -28,13 +28,15 @@ export const MY_DATE_FORMATS = {
 export class AddLivroComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private livroService: LivroService,
-    private router: Router) { }
+    private router: Router, private route: ActivatedRoute) { }
 
   form: FormGroup;
   livro: Livro = new Livro();
   submitted = false;
   isSalvarOuEditar: any;
   isDetalhe: any;
+  imagemSelecionada: File;
+  enviandoImagem = false;
 
   ngOnInit() {
 
@@ -50,6 +52,34 @@ export class AddLivroComponent implements OnInit {
         imagemCapa: ['', Validators.required]
       });
 
+     const id = this.route.snapshot.queryParams['id'];
+     if (id) {
+       this.livroService.getLivroById(+id).subscribe(
+         (data: any) => {
+           data.dataPublicacao = new Date(data.dataPublicacao);
+           this.livro = data;
+         },
+         error => console.log(error));
+     }
+
+  }
+
+  onImagemSelecionada(event) {
+    const arquivo: File = event.target.files && event.target.files[0];
+    if (!arquivo) {
+      return;
+    }
+    this.imagemSelecionada = arquivo;
+    this.enviandoImagem = true;
+    this.livroService.uploadImagem(arquivo).subscribe(
+      (url: string) => {
+        this.livro.imagemCapa = url;
+        this.enviandoImagem = false;
+      },
+      error => {
+        console.log(error);
+        this.enviandoImagem = false;
+      });
   }
 
   verificaValidTouched(campo) {
@@ -64,23 +94,19 @@ export class AddLivroComponent implements OnInit {
   }
 
   saveOrUpdate(formulario) {
-    if (formulario.id === undefined) {
+    if (formulario.value.id === undefined || formulario.value.id === null) {
       this.livroService.salvar(formulario.value)
-      .subscribe(data => console.log(data), error => console.log(error));
-      this.livro = new Livro();
-      this.gotoList();
+      .subscribe(data => this.gotoList(), error => console.log(error));
       } else {
         this.livroService.atualizar(formulario.value)
-        .subscribe(data => console.log(data), error => console.log(error));
-        this.livro = new Livro();
-        this.gotoList();
+        .subscribe(data => this.gotoList(), error => console.log(error));
     }
 
    }
 
   onSubmit(formulario) {
     this.submitted = true;
-    if (formulario.invalid) {
+    if (this.enviandoImagem || formulario.invalid) {
       return;
   } else {
     this.saveOrUpdate(formulario);

@@ -83,6 +83,7 @@ public class UsuarioController {
 			usuario.setNome(dto.getNome());
 			usuario.setEmail(dto.getEmail());
 			usuario.setSenha(dto.getSenha());
+			usuario.setRole(modelMapper.map(dto.getRole(), Role.class));
 			usuario = usuarioService.editar(usuario);
 			return modelMapper.map(usuario, UsuarioDTO.class);
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
